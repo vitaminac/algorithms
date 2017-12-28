@@ -1,56 +1,124 @@
 #pragma once
-#ifndef Deque_ADT_H
-#define Deque_ADT_H
-#include "Queue.h"
-#include "Stack.h"
+#ifndef Deque_H
+#define Deque_H
+#include "../Exception/CollectionEmptyException.h"
+#include "../Exception/ConcurrentModificationException.h"
+#include "DequeADT.h"
 
-// A linear collection that supports element insertion and removal at both ends.
 template <class E>
-class Deque : public virtual Queue <E>, public virtual Stack <E> {
+class Deque : public DequeADT <E> {
+	typedef struct Node {
+		E item;
+		struct Node * prev;
+		struct Node * next;
+
+		explicit Node (E item, Node * prev, Node * next) : item(item), prev(prev), next(next) {
+		}
+
+		explicit Node () : prev(nullptr), next(nullptr) {
+		}
+	} Node;
+
+private:
+	int size_ = 0;
+	Node head = Node();
+
+	Node * getFirstNodeUncheck () const {
+		return this->head.next;
+	}
+
+	Node * getFirstNode () const {
+		Node * f = this->getFirstNodeUncheck();
+		if (f == &(this->head)) {
+			throw CollectionEmptyException();
+		}
+		return f;
+	}
+
+	Node * getLastNodeUncheck () const {
+		return this->head.prev;
+	}
+
+	Node * getLastNode () const {
+		Node * l = this->getLastNodeUncheck();
+		if (l == &(this->head)) {
+			throw CollectionEmptyException();
+		}
+		return l;
+	}
+
+	E unlinkNode (Node * node) {
+		Node * prevNode = node->prev;
+		Node * nextNode = node->next;
+		E element = node->item;
+		prevNode->next = nextNode;
+		nextNode->prev = prevNode;
+		delete node;
+		--(this->size_);
+		return element;
+	}
+
+	void linkNode (Node * prevNode, const E & element, Node * nextNode) {
+		auto newNode = new Node(element, prevNode, nextNode);
+		prevNode->next = newNode;
+		nextNode->prev = newNode;
+		++(this->size_);
+	}
+
+	void insertBefore (Node * node, const E & element) {
+		this->linkNode(node->prev, element, node);
+	}
+
+	void insertAfter (Node * node, const E & element) {
+		this->linkNode(node, element, node->next);
+	}
+
 public:
-	Deque () {
+	explicit Deque () {
+		head.next = &head;
+		head.prev = &head;
 	}
 
 	virtual ~Deque () {
+		Deque <E>::clear();
 	}
 
-	// Inserts the specified element at the front of this deque
-	virtual void addFirst (const E & e) = 0;
+	virtual int size () const override {
+		return this->size_;
+	}
 
-	// Inserts the specified element at the end of this deque
-	virtual void addLast (const E & e) = 0;
+	virtual E & getFirst () const override {
+		return this->getFirstNode()->item;
+	}
 
-	// Retrieves and removes the first element of this deque
-	virtual E removeFirst () = 0;
+	virtual E & getLast () const override {
+		return this->getLastNode()->item;
+	}
 
-	// Retrieves and removes the last element of this deque
-	virtual E removeLast () = 0;
+	virtual void addFirst (const E & e) override {
+		insertBefore(this->getFirstNodeUncheck(), e);
+	}
 
-	// Retrieves, but does not remove, the first element of this deque
-	virtual E & getFirst () const = 0;
+	virtual void addLast (const E & e) override {
+		insertAfter(this->getLastNodeUncheck(), e);
+	}
 
-	// Retrieves, but does not remove, the last element of this deque
-	virtual E & getLast () const = 0;
+	virtual E removeFirst () override {
+		return this->unlinkNode(this->getFirstNode());
+	}
 
-	// Removes the first occurrence of the specified element from this deque
-	virtual bool removeFirstOccurrence (const E & e) = 0;
+	virtual E removeLast () override {
+		return this->unlinkNode(this->getLastNode());
+	}
 
-	// Removes the last occurrence of the specified element from this deque
-	virtual bool removeLastOccurrence (const E & e) = 0;
-
-	virtual Iterator <E> descendingIterator () const = 0;
-
-	virtual void enqueue (const E & e) override;
-
-	virtual E dequeue () override;
-
-	virtual E & peek () override;
-
-	// alias of addLast
-	virtual void add (const E & e) override;
-
-	virtual void push (const E & e) override;
-
-	virtual E pop () override;
+	virtual void clear () override {
+		try {
+			while (this->size_ > 0) {
+				this->removeLast();
+			}
+		} catch (CollectionEmptyException & e) {
+			throw ConcurrentModificationException();
+		}
+	}
 };
 #endif

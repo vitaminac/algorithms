@@ -115,27 +115,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Collection\Collection.cpp" />
     <ClCompile Include="Collection\Iterable.cpp" />
-    <ClCompile Include="Deque\Deque.cpp" />
-    <ClCompile Include="Deque\Queue.cpp" />
-    <ClCompile Include="Deque\Stack.cpp" />
     <ClCompile Include="List\List.cpp" />
     <ClCompile Include="List\ListIterator.cpp" />
     <ClCompile Include="Sort\Timsort.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collection\Collection.h" />
+    <ClInclude Include="Collection\CollectionADT.h" />
     <ClInclude Include="Collection\Iterable.h" />
     <ClInclude Include="Collection\Iterator.h" />
-    <ClInclude Include="Deque\Deque.h" />
+    <ClInclude Include="Deque\DequeADT.h" />
     <ClInclude Include="Deque\Queue.h" />
     <ClInclude Include="Deque\Stack.h" />
     <ClInclude Include="Exception\CollectionEmptyException.h" />
     <ClInclude Include="Exception\ConcurrentModificationException.h" />
     <ClInclude Include="Exception\IndexOutOfBoundsException.h" />
     <ClInclude Include="Exception\NoSuchElementException.h" />
-    <ClInclude Include="List\LinkedList\DoublyLinkedList.h" />
+    <ClInclude Include="Deque\Deque.h" />
     <ClInclude Include="List\List.h" />
     <ClInclude Include="List\ListIterator.h" />
     <ClInclude Include="Sort\Timsort.h" />

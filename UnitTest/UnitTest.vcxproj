@@ -120,7 +120,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnotherTest.cpp" />
-    <ClCompile Include="DoublyLinkedListTest.cpp" />
+    <ClCompile Include="DequeTest.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

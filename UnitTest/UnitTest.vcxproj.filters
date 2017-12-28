@@ -18,10 +18,10 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DoublyLinkedListTest.cpp">
+    <ClCompile Include="AnotherTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AnotherTest.cpp">
+    <ClCompile Include="DequeTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

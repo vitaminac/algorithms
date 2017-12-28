@@ -1,7 +1,7 @@
 #pragma once
 #ifndef List_ADT
 #define List_ADT
-#include "../Collection/Collection.h"
+#include "../Collection/CollectionADT.h"
 #include "ListIterator.h"
 
 template <class E>
@@ -9,7 +9,7 @@ class ListIterator;
 
 // An iterator over a collection.
 template <class E>
-class List : public virtual Collection <E> {
+class List : public virtual CollectionADT <E> {
 protected:
 	bool isElementIndex (int index);
 public:
@@ -29,7 +29,7 @@ public:
 
 	virtual void insert (int index, const E & e) = 0;
 
-	using Collection <E>::remove;
+	using CollectionADT <E>::remove;
 
 	virtual E remove (int index) = 0;
 

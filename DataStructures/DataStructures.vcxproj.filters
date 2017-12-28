@@ -15,15 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Deque\Deque.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Deque\Queue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Deque\Stack.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="List\List.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -33,17 +24,11 @@
     <ClCompile Include="Sort\Timsort.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Collection\Collection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Collection\Iterable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Deque\Deque.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Deque\Queue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -68,19 +53,25 @@
     <ClInclude Include="Sort\Timsort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="List\LinkedList\DoublyLinkedList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Exception\CollectionEmptyException.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Collection\Collection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Collection\Iterable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Collection\Iterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Deque\DequeADT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Deque\Deque.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Collection\CollectionADT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Collection\Collection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
