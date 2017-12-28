@@ -6,11 +6,8 @@
 template <class E>
 class Iterator {
 public:
-	Iterator () {
-	}
 
-	virtual ~Iterator () {
-	}
+	virtual ~Iterator () = default;
 
 	virtual bool hasNext () const = 0;
 

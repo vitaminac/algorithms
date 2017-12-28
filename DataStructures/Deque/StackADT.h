@@ -4,10 +4,10 @@
 #include "../Collection/Collection.h"
 
 template <class E>
-class Stack : public virtual Collection <E> {
+class StackADT : public virtual Collection <E> {
 public:
 
-	virtual ~Stack () = default;
+	virtual ~StackADT () = default;
 
 	virtual void add (const E & e) override {
 		this->push(e);

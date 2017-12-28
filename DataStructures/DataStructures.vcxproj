@@ -115,7 +115,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Collection\Iterable.cpp" />
     <ClCompile Include="List\List.cpp" />
     <ClCompile Include="List\ListIterator.cpp" />
     <ClCompile Include="Sort\Timsort.cpp" />
@@ -127,7 +126,8 @@
     <ClInclude Include="Collection\Iterator.h" />
     <ClInclude Include="Deque\DequeADT.h" />
     <ClInclude Include="Deque\Queue.h" />
-    <ClInclude Include="Deque\Stack.h" />
+    <ClInclude Include="List\LinkedList\SinglyLinkedList.h" />
+    <ClInclude Include="Deque\StackADT.h" />
     <ClInclude Include="Exception\CollectionEmptyException.h" />
     <ClInclude Include="Exception\ConcurrentModificationException.h" />
     <ClInclude Include="Exception\IndexOutOfBoundsException.h" />

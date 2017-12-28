@@ -2,11 +2,11 @@
 #ifndef Deque_ADT_H
 #define Deque_ADT_H
 #include "Queue.h"
-#include "Stack.h"
+#include "StackADT.h"
 
 // A linear collection that supports element insertion and removal at both ends.
 template <class E>
-class DequeADT : public Queue <E>, public Stack <E> {
+class DequeADT : public Queue <E>, public StackADT <E> {
 public:
 	virtual ~DequeADT () = default;
 

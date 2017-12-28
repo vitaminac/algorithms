@@ -34,12 +34,6 @@ public:
 		return true;
 	}
 
-	virtual void add (const E & e) = 0;
-
-	virtual void addAll (const CollectionADT <E> & c) {
-		c.forEach(this.add);
-	}
-
 	virtual bool remove (const E & e) {
 		Iterator <E> & it = this->iterator();
 		if (e == nullptr) {

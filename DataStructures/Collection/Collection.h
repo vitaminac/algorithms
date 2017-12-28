@@ -2,6 +2,7 @@
 #pragma once
 #ifndef Collection_H
 #define Collection_H
+#include "Iterable.h"
 
 template <class E>
 class Collection {
@@ -9,6 +10,13 @@ public:
 	virtual ~Collection () = default;
 
 	virtual void add (const E & e) = 0;
+
+	virtual void addAll (const Iterable <E> & iterable) {
+		iterable.forEach([this] (const E & e)
+		{
+			this->add(e);
+		});
+	}
 
 	virtual int size () const = 0;
 

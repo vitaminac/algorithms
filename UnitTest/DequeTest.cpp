@@ -181,4 +181,9 @@ BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 		}
 	}
 
+	BOOST_AUTO_TEST_CASE(TestingAddAll) {
+		// also concurrent test
+		BOOST_CHECK(false); // leave for future
+	}
+
 BOOST_AUTO_TEST_SUITE_END()
