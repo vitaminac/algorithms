@@ -13,19 +13,16 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\List">
-      <UniqueIdentifier>{069d005f-8d1d-48fe-8d0c-bdf7e5e96877}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ListADT.cpp">
-      <Filter>Source Files\List</Filter>
+    <ClCompile Include="DoublyLinkedListTest.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ListADT.h">
-      <Filter>Source Files\List</Filter>
+    <ClCompile Include="AnotherTest.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
