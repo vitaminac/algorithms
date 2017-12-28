@@ -86,8 +86,7 @@ BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 		for (int i = 0; i < 100; i++) {
 			if ((i % 2) == 0) {
 				list.addFirst(-i);
-			}
-			else {
+			} else {
 				list.addLast(i);
 			}
 		}
@@ -158,6 +157,28 @@ BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 		BOOST_CHECK_THROW(list.getFirst(), CollectionEmptyException);
 		BOOST_CHECK_THROW(list.getLast(), CollectionEmptyException);
 		BOOST_CHECK_EQUAL(0, list.size());
+	}
+
+	BOOST_AUTO_TEST_CASE(TestingQueueMethod) {
+		Deque <int> list = Deque <int>();
+		for (int i = 0; i < 100; i++) {
+			list.enqueue(i);
+		}
+		for (int i = 0; i < 100; i++) {
+			BOOST_CHECK_EQUAL(i, list.peek());
+			BOOST_CHECK_EQUAL(i, list.dequeue());
+		}
+	}
+
+	BOOST_AUTO_TEST_CASE(TestingStackMethod) {
+		Deque <int> list = Deque <int>();
+		for (int i = 0; i < 100; i++) {
+			list.push(i);
+		}
+		for (int i = 99; i >= 100; i--) {
+			BOOST_CHECK_EQUAL(i, list.peek());
+			BOOST_CHECK_EQUAL(i, list.pop());
+		}
 	}
 
 BOOST_AUTO_TEST_SUITE_END()

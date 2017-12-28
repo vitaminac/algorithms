@@ -1,11 +1,12 @@
 #pragma once
 #ifndef Deque_ADT_H
 #define Deque_ADT_H
-#include "../Collection/Collection.h"
+#include "Queue.h"
+#include "Stack.h"
 
 // A linear collection that supports element insertion and removal at both ends.
 template <class E>
-class DequeADT : public virtual Collection <E> {
+class DequeADT : public Queue <E>, public Stack <E> {
 public:
 	virtual ~DequeADT () = default;
 
@@ -30,5 +31,37 @@ public:
 
 	// Retrieves, but does not remove, the last element of this deque
 	virtual E & getLast () const = 0;
+
+	#pragma region QueueStackMethod
+
+	#pragma region QueueMethod
+
+	virtual void enqueue (const E & e) override {
+		this->addLast(e);
+	}
+
+	virtual E dequeue () override {
+		return this->removeFirst();
+	}
+
+	#pragma endregion
+
+	#pragma region StackMethod
+
+	virtual void push (const E & e) override {
+		this->addFirst(e);
+	}
+
+	virtual E pop () override {
+		return this->removeFirst();
+	}
+
+	#pragma endregion
+
+	virtual E & peek () override {
+		return this->getFirst();
+	}
+
+	#pragma endregion
 };
 #endif
