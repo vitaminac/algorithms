@@ -2,6 +2,7 @@
 #include "Deque/Deque.h"
 #include "Exception/CollectionEmptyException.h"
 #include "Exception/ConcurrentModificationException.h"
+#include <iostream>
 
 BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 
@@ -183,6 +184,60 @@ BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 
 	BOOST_AUTO_TEST_CASE(TestingAddAll) {
 		// also concurrent test
+		BOOST_CHECK(false); // leave for future
+	}
+
+	BOOST_AUTO_TEST_CASE(TestingAddDerivedClass) {
+		typedef struct base {
+		public:
+			int b;
+
+			explicit base (int b): b(b) {
+				std::cout << "create base class with " << b << std::endl;
+			}
+
+			virtual ~base () {
+				std::cout << "base class's destructor" << std::endl;
+			}
+
+			virtual void print () {
+				std::cout << "i'm base class " << this->b << std::endl;
+			}
+		} base;
+		typedef struct derived : base {
+		public:
+			int d;
+
+			explicit derived (int b, int d): base(b), d(d) {
+				std::cout << "create derived class with " << b << " " << d << std::endl;
+			}
+
+			virtual ~derived () {
+				std::cout << "derived class's destructor" << std::endl;
+			}
+
+			virtual void print () override {
+				std::cout << "i'm derived class " << this->b << " and " << this->d << std::endl;
+			}
+		} derived;
+
+		base b = base(1);
+		derived d = derived(2, 3);
+		base & baseRef1 = b;
+		base & baseRef2 = d;
+		baseRef1.print();
+		baseRef2.print();
+		base baseValue1 = baseRef1;
+		base baseValue2 = baseRef2;
+		baseValue1.print();
+		baseValue2.print();
+		Deque <base> list = Deque <base>();
+		list.add(b);
+		list.add(d);
+		base b1 = list.removeFirst();
+		base b2 = list.removeFirst();
+		b1.print();
+		b2.print();
 		BOOST_CHECK(false); // leave for future
 	}
 

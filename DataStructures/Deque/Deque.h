@@ -14,34 +14,31 @@ class Deque : public DequeADT <E> {
 
 		explicit Node (E item, Node * prev, Node * next) : item(item), prev(prev), next(next) {
 		}
-
-		explicit Node () : prev(nullptr), next(nullptr) {
-		}
 	} Node;
 
 private:
 	int size_ = 0;
-	Node head = Node();
+	Node * const head = reinterpret_cast <Node *>(malloc(sizeof(Node)));
 
 	Node * getFirstNodeUncheck () const {
-		return this->head.next;
+		return this->head->next;
 	}
 
 	Node * getFirstNode () const {
 		Node * f = this->getFirstNodeUncheck();
-		if (f == &(this->head)) {
+		if (f == this->head) {
 			throw CollectionEmptyException();
 		}
 		return f;
 	}
 
 	Node * getLastNodeUncheck () const {
-		return this->head.prev;
+		return this->head->prev;
 	}
 
 	Node * getLastNode () const {
 		Node * l = this->getLastNodeUncheck();
-		if (l == &(this->head)) {
+		if (l == this->head) {
 			throw CollectionEmptyException();
 		}
 		return l;
@@ -75,12 +72,13 @@ private:
 
 public:
 	explicit Deque () {
-		head.next = &head;
-		head.prev = &head;
+		this->head->next = this->head;
+		this->head->prev = this->head;
 	}
 
 	virtual ~Deque () {
 		Deque <E>::clear();
+		free(const_cast <Node *>(this->head));
 	}
 
 	virtual int size () const override {

@@ -6,7 +6,7 @@
 
 // A linear collection that supports element insertion and removal at both ends.
 template <class E>
-class DequeADT : public Queue <E>, public StackADT <E> {
+class DequeADT : public virtual Queue <E>, public virtual StackADT <E> {
 public:
 	virtual ~DequeADT () = default;
 
