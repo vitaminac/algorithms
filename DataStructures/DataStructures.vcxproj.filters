@@ -26,9 +26,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Deque\Queue.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Exception\ConcurrentModificationException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -71,7 +68,7 @@
     <ClInclude Include="Deque\StackADT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="List\LinkedList\SinglyLinkedList.h">
+    <ClInclude Include="Deque\QueueADT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

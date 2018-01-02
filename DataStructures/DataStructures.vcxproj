@@ -125,8 +125,7 @@
     <ClInclude Include="Collection\Iterable.h" />
     <ClInclude Include="Collection\Iterator.h" />
     <ClInclude Include="Deque\DequeADT.h" />
-    <ClInclude Include="Deque\Queue.h" />
-    <ClInclude Include="List\LinkedList\SinglyLinkedList.h" />
+    <ClInclude Include="Deque\QueueADT.h" />
     <ClInclude Include="Deque\StackADT.h" />
     <ClInclude Include="Exception\CollectionEmptyException.h" />
     <ClInclude Include="Exception\ConcurrentModificationException.h" />

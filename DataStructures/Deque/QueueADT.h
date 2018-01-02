@@ -4,17 +4,17 @@
 #include "../Collection/Collection.h"
 
 template <class E>
-class Queue : public virtual Collection <E> {
+class QueueADT : public virtual Collection <E> {
 public:
 
-	virtual ~Queue () = default;
+	virtual ~QueueADT () = default;
 
-	virtual void add (const E & e) override {
+	virtual void add (const E e) override {
 		this->enqueue(e);
 	}
 
 	// Inserts the specified element into this queue
-	virtual void enqueue (const E & e) = 0;
+	virtual void enqueue (const E e) = 0;
 
 	// Retrieves and removes the head of this queue
 	virtual E dequeue () = 0;

@@ -9,12 +9,12 @@ public:
 
 	virtual ~StackADT () = default;
 
-	virtual void add (const E & e) override {
+	virtual void add (const E e) override {
 		this->push(e);
 	}
 
 	// Pushes an element onto the stack
-	virtual void push (const E & e) = 0;
+	virtual void push (const E e) = 0;
 
 	// Pops an element from the stack
 	virtual E pop () = 0;

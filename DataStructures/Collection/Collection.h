@@ -9,7 +9,7 @@ class Collection {
 public:
 	virtual ~Collection () = default;
 
-	virtual void add (const E & e) = 0;
+	virtual void add (const E e) = 0;
 
 	virtual void addAll (const Iterable <E> & iterable) {
 		iterable.forEach([this] (const E & e)

@@ -93,11 +93,11 @@ public:
 		return this->getLastNode()->item;
 	}
 
-	virtual void addFirst (const E & e) override {
+	virtual void addFirst (const E e) override {
 		insertBefore(this->getFirstNodeUncheck(), e);
 	}
 
-	virtual void addLast (const E & e) override {
+	virtual void addLast (const E e) override {
 		insertAfter(this->getLastNodeUncheck(), e);
 	}
 
@@ -111,7 +111,7 @@ public:
 
 	virtual void clear () override {
 		try {
-			while (this->size_ > 0) {
+			while (this->size() > 0) {
 				this->removeLast();
 			}
 		} catch (CollectionEmptyException & e) {

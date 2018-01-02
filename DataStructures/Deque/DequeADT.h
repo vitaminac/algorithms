@@ -1,24 +1,25 @@
 #pragma once
 #ifndef Deque_ADT_H
 #define Deque_ADT_H
-#include "Queue.h"
+#include "QueueADT.h"
 #include "StackADT.h"
 
 // A linear collection that supports element insertion and removal at both ends.
 template <class E>
-class DequeADT : public virtual Queue <E>, public virtual StackADT <E> {
+class DequeADT : public QueueADT <E>, public StackADT <E> {
 public:
+
 	virtual ~DequeADT () = default;
 
-	virtual void add (const E & e) override {
+	virtual void add(const E e) override {
 		this->addLast(e);
 	}
 
 	// Inserts the specified element at the front of this deque
-	virtual void addFirst (const E & e) = 0;
+	virtual void addFirst (const E e) = 0;
 
 	// Inserts the specified element at the end of this deque
-	virtual void addLast (const E & e) = 0;
+	virtual void addLast (const E e) = 0;
 
 	// Retrieves and removes the first element of this deque
 	virtual E removeFirst () = 0;
@@ -36,7 +37,7 @@ public:
 
 	#pragma region QueueMethod
 
-	virtual void enqueue (const E & e) override {
+	virtual void enqueue (const E e) override {
 		this->addLast(e);
 	}
 
@@ -48,7 +49,7 @@ public:
 
 	#pragma region StackMethod
 
-	virtual void push (const E & e) override {
+	virtual void push (const E e) override {
 		this->addFirst(e);
 	}
 
