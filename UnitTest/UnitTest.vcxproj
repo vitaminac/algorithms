@@ -119,9 +119,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ADTTest.cpp" />
     <ClCompile Include="AnotherTest.cpp" />
     <ClCompile Include="DequeTest.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="StackTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataStructures\DataStructures.vcxproj">

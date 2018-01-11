@@ -18,9 +18,6 @@
     <ClCompile Include="List\List.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="List\ListIterator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sort\Timsort.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -53,22 +50,28 @@
     <ClInclude Include="Collection\Iterator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Deque\DequeADT.h">
+    <ClInclude Include="Collection\ADT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="function.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="List\LinkedList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Deque\Stack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Deque\Queue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Deque\Deque.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Collection\CollectionADT.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Collection\Collection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Deque\StackADT.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Deque\QueueADT.h">
+    <ClInclude Include="List\ArrayList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

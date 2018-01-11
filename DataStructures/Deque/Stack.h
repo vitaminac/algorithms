@@ -1,20 +1,19 @@
-#pragma once
 #ifndef Stack_ADT_H
 #define Stack_ADT_H
-#include "../Collection/Collection.h"
+#include "../Collection/ADT.h"
 
 template <class E>
-class StackADT : public virtual Collection <E> {
+class Stack : public virtual ADT <E> {
 public:
 
-	virtual ~StackADT () = default;
+	virtual ~Stack () = default;
 
-	virtual void add (const E e) override {
+	virtual void add (const E & e) override {
 		this->push(e);
 	}
 
 	// Pushes an element onto the stack
-	virtual void push (const E e) = 0;
+	virtual void push (const E & e) = 0;
 
 	// Pops an element from the stack
 	virtual E pop () = 0;

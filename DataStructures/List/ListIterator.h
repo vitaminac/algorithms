@@ -9,37 +9,21 @@ class List;
 // An iterator over a collection.
 template <class E>
 class ListIterator : Iterator <E> {
-protected:
-	// Index of element returned by most recent call to next or previous
-	int lastRet = -1;
-	List <E> & list;
-	int cursor = 0;
 public:
-	explicit ListIterator (List <E> & list) : list(list) {
-	};
+	ListIterator () = default;
 
-	explicit ListIterator (List <E> & list, int index) : list(list), cursor(index) {
-	}
+	virtual ~ListIterator () = default;
 
-	virtual ~ListIterator () {
-	}
+	virtual bool hasPrevious () const = 0;
 
-	virtual bool hasNext () const override;
+	virtual E & previous () = 0;
 
-	virtual bool hasPrevious () const;
+	virtual int nextIndex () const = 0;
 
-	virtual E & next () override;
+	virtual int previousIndex () const = 0;
 
-	virtual E & previous ();
+	virtual void set (const E & e) = 0;
 
-	virtual void remove () override;
-
-	virtual int nextIndex ();
-
-	virtual int previousIndex ();
-
-	virtual void set (const E & e);
-
-	virtual void add (const E & e);
+	virtual void add (const E & e) = 0;
 };
 #endif

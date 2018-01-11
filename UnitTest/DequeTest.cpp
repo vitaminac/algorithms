@@ -1,5 +1,5 @@
 #include <boost/test/unit_test.hpp>
-#include "Deque/Deque.h"
+#include "List/LinkedList.h"
 #include "Exception/CollectionEmptyException.h"
 #include "Exception/ConcurrentModificationException.h"
 #include <iostream>
@@ -7,18 +7,8 @@
 
 BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 
-	BOOST_AUTO_TEST_CASE(TestingSizeInitialZero) {
-		Deque <int> list = Deque <int>();
-		BOOST_CHECK_EQUAL(0, list.size());
-	}
-
-	BOOST_AUTO_TEST_CASE(TestingisEmpty) {
-		Deque <int> list = Deque <int>();
-		BOOST_CHECK(list.isEmpty());
-	}
-
 	BOOST_AUTO_TEST_CASE (TestingSizeIncrement) {
-		Deque <int> list = Deque <int>();
+		LinkedList <int> list = LinkedList <int>();
 		list.addFirst(2);
 		BOOST_CHECK_EQUAL(list.size(), 1);
 		const int temp = list.removeFirst();
@@ -27,13 +17,13 @@ BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 	}
 
 	BOOST_AUTO_TEST_CASE(TestingGetWhenEmpty) {
-		Deque <int> list = Deque <int>();
+		LinkedList <int> list = LinkedList <int>();
 		BOOST_CHECK_THROW(list.getFirst(), CollectionEmptyException);
 		BOOST_CHECK_THROW(list.getLast(), CollectionEmptyException);
 	}
 
 	BOOST_AUTO_TEST_CASE(TestingGetFirst) {
-		Deque <int> list = Deque <int>();
+		LinkedList <int> list = LinkedList <int>();
 		list.addFirst(2);
 		BOOST_CHECK_EQUAL(2, list.getFirst());
 		list.addFirst(3);
@@ -45,7 +35,7 @@ BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 	}
 
 	BOOST_AUTO_TEST_CASE(TestingGetLast) {
-		Deque <int> list = Deque <int>();
+		LinkedList <int> list = LinkedList <int>();
 		list.addLast(2);
 		BOOST_CHECK_EQUAL(2, list.getLast());
 		list.addLast(3);
@@ -57,7 +47,7 @@ BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 	}
 
 	BOOST_AUTO_TEST_CASE(TestingAddFirst) {
-		Deque <int> list = Deque <int>();
+		LinkedList <int> list = LinkedList <int>();
 		for (int i = 0; i < 100; i++) {
 			list.addFirst(i);
 		}
@@ -65,7 +55,7 @@ BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 	}
 
 	BOOST_AUTO_TEST_CASE(TestingAddLast) {
-		Deque <int> list = Deque <int>();
+		LinkedList <int> list = LinkedList <int>();
 		for (int i = 0; i < 100; i++) {
 			list.addLast(i);
 		}
@@ -73,7 +63,7 @@ BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 	}
 
 	BOOST_AUTO_TEST_CASE(TestingAdd) {
-		Deque <int> list = Deque <int>();
+		LinkedList <int> list = LinkedList <int>();
 		for (int i = 0; i < 100; i++) {
 			list.add(i);
 		}
@@ -84,7 +74,7 @@ BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 	}
 
 	BOOST_AUTO_TEST_CASE(TestingADDFirstAddLast) {
-		Deque <int> list = Deque <int>();
+		LinkedList <int> list = LinkedList <int>();
 		for (int i = 0; i < 100; i++) {
 			if ((i % 2) == 0) {
 				list.addFirst(-i);
@@ -102,7 +92,7 @@ BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 	}
 
 	BOOST_AUTO_TEST_CASE(TestingAddFirstAndRemoveFirst) {
-		Deque <int> list = Deque <int>();
+		LinkedList <int> list = LinkedList <int>();
 		for (int i = 0; i < 100; i++) {
 			list.addFirst(i);
 		}
@@ -114,7 +104,7 @@ BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 	}
 
 	BOOST_AUTO_TEST_CASE(TestingAddFirstAndRemoveLast) {
-		Deque <int> list = Deque <int>();
+		LinkedList <int> list = LinkedList <int>();
 		for (int i = 0; i < 100; i++) {
 			list.addFirst(i);
 		}
@@ -126,7 +116,7 @@ BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 	}
 
 	BOOST_AUTO_TEST_CASE(TestingAddLastAndRemoveFirst) {
-		Deque <int> list = Deque <int>();
+		LinkedList <int> list = LinkedList <int>();
 		for (int i = 0; i < 100; i++) {
 			list.addLast(i);
 		}
@@ -138,7 +128,7 @@ BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 	}
 
 	BOOST_AUTO_TEST_CASE(TestingAddLastAndRemoveLast) {
-		Deque <int> list = Deque <int>();
+		LinkedList <int> list = LinkedList <int>();
 		for (int i = 0; i < 100; i++) {
 			list.addLast(i);
 		}
@@ -150,7 +140,7 @@ BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 	}
 
 	BOOST_AUTO_TEST_CASE(TestingClear) {
-		Deque <int> list = Deque <int>();
+		LinkedList <int> list = LinkedList <int>();
 		for (int i = 0; i < 100; i++) {
 			list.add(i);
 		}
@@ -162,24 +152,13 @@ BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 	}
 
 	BOOST_AUTO_TEST_CASE(TestingQueueMethod) {
-		Deque <int> list = Deque <int>();
+		LinkedList <int> list = LinkedList <int>();
 		for (int i = 0; i < 100; i++) {
 			list.enqueue(i);
 		}
 		for (int i = 0; i < 100; i++) {
 			BOOST_CHECK_EQUAL(i, list.peek());
 			BOOST_CHECK_EQUAL(i, list.dequeue());
-		}
-	}
-
-	BOOST_AUTO_TEST_CASE(TestingStackMethod) {
-		Deque <int> list = Deque <int>();
-		for (int i = 0; i < 100; i++) {
-			list.push(i);
-		}
-		for (int i = 99; i >= 100; i--) {
-			BOOST_CHECK_EQUAL(i, list.peek());
-			BOOST_CHECK_EQUAL(i, list.pop());
 		}
 	}
 
@@ -199,7 +178,7 @@ BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 		Object baseValue2 = baseRef2;
 		baseValue1.print();
 		baseValue2.print();
-		Deque <Object> list = Deque <Object>();
+		LinkedList <Object> list = LinkedList <Object>();
 		list.add(b);
 		// object slicing
 		list.add(d);

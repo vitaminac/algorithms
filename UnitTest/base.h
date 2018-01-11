@@ -3,9 +3,9 @@
 using std::string;
 
 typedef struct base {
-public:
+private:
 	int b;
-
+public:
 	explicit base (const int b) : b(b) {
 		std::cout << "create base class with " << b << std::endl;
 	}
@@ -20,6 +20,10 @@ public:
 
 	virtual void print () {
 		std::cout << this->toString() << std::endl;
+	}
+
+	int getB () {
+		return this->b;
 	}
 } Object;
 

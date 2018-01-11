@@ -1,22 +1,23 @@
-#pragma once
 #ifndef Iterable_H
 #define Iterable_H
+#include <memory>
 #include "Iterator.h"
-#include <functional>
+#include "../function.h"
 
 template <class E>
 class Iterable {
 public:
+	Iterable () = default;
 	virtual ~Iterable () = default;
 
-	virtual Iterator <E> & iterator () const = 0;
+	// you should use smart pointer wrapper
+	virtual Iterator <E> * iterator () const = 0;
 
-	virtual void forEach (std::function <void  (const E &)> consumer) const {
-		Iterator <E> & it = this->iterator();
-		while (it.hasNext()) {
-			consumer(it.next());
+	virtual void forEach (Consumer <E> consume) const {
+		auto it = std::unique_ptr <Iterator <E>>(this->iterator());
+		while (it->hasNext()) {
+			consume(it->next());
 		}
 	}
 };
 #endif
-//void (*consumer) (const E &)
