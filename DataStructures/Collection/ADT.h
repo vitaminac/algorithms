@@ -15,7 +15,7 @@ public:
 	// posible object slicing
 	virtual void add (const E & e) = 0;
 
-	virtual void addAll (const Iterable <E> & iterable) {
+	virtual void addAll (Iterable <E> & iterable) {
 		iterable.forEach(std::bind(&ADT::add, this, _1));
 	}
 

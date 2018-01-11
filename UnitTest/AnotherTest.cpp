@@ -1,12 +1,12 @@
 #include <boost/test/unit_test.hpp>
-#include "base.h"
+#include "Base.h"
 
 BOOST_AUTO_TEST_SUITE(AnotherTest)
 
 	BOOST_AUTO_TEST_CASE(TestingDelete) {
-		Object * o = new Object(1);
+		Base * o = new Base(1);
 		BOOST_CHECK_EQUAL(1, o->getB());
-		Object * & o2 = o;
+		Base * & o2 = o;
 		BOOST_CHECK_EQUAL(o, o2);
 		delete o2;
 		auto x = o->getB();

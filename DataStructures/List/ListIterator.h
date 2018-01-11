@@ -1,14 +1,12 @@
-#pragma once
 #ifndef List_Iterator
 #define List_Iterator
-#include "List.h"
 
 template <class E>
 class List;
 
 // An iterator over a collection.
 template <class E>
-class ListIterator : Iterator <E> {
+class ListIterator : public Iterator <E> {
 public:
 	ListIterator () = default;
 
@@ -24,6 +22,7 @@ public:
 
 	virtual void set (const E & e) = 0;
 
+	// Inserts the specified element into the list immediately before the element that would be returned by #next
 	virtual void add (const E & e) = 0;
 };
 #endif

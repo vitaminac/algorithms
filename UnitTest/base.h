@@ -2,36 +2,40 @@
 #include <iostream>
 using std::string;
 
-typedef struct base {
+typedef struct Base {
 private:
 	int b;
 public:
-	explicit base (const int b) : b(b) {
-		std::cout << "create base class with " << b << std::endl;
+	explicit Base (const int b) : b(b) {
+		std::cout << "create Base class with " << b << std::endl;
 	}
 
-	virtual ~base () {
-		std::cout << "base class's destructor" << std::endl;
+	virtual ~Base () {
+		std::cout << "Base class's destructor" << std::endl;
 	}
 
 	virtual string toString () {
-		return "i'm base class " + std::to_string(this->b);
+		return "i'm Base class " + std::to_string(this->b);
 	}
 
 	virtual void print () {
 		std::cout << this->toString() << std::endl;
 	}
 
-	int getB () {
+	int getB () const {
 		return this->b;
 	}
-} Object;
 
-typedef struct derived : Object {
+	inline bool operator == (const Base & b) const {
+		return this->getB() == b.getB();
+	}
+} Base;
+
+typedef struct derived : Base {
 public:
 	int d;
 
-	explicit derived (const int b, const int d) : base(b), d(d) {
+	explicit derived (const int b, const int d) : Base(b), d(d) {
 		std::cout << "Constructor " << b << " " << d << std::endl;
 	}
 
@@ -40,6 +44,6 @@ public:
 	}
 
 	virtual string toString () override {
-		return Object::toString() + "and also i'm derived class " + std::to_string(this->d);
+		return Base::toString() + "and also i'm derived class " + std::to_string(this->d);
 	}
 } DerivedObject;

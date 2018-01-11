@@ -115,10 +115,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="List\List.cpp" />
-    <ClCompile Include="Sort\Timsort.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Collection\ADT.h" />
     <ClInclude Include="Collection\Collection.h" />
     <ClInclude Include="Collection\Iterable.h" />
@@ -136,6 +132,9 @@
     <ClInclude Include="List\List.h" />
     <ClInclude Include="List\ListIterator.h" />
     <ClInclude Include="Sort\Timsort.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

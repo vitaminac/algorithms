@@ -6,6 +6,7 @@
 template <class E>
 class Iterator {
 public:
+	Iterator () = default;
 
 	virtual ~Iterator () = default;
 
@@ -14,6 +15,6 @@ public:
 	virtual E & next () = 0;
 
 	// Removes from the underlying collection the last element returned by this iterator
-	virtual void remove () = 0;
+	virtual E remove () = 0;
 };
 #endif

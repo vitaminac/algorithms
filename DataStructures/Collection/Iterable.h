@@ -11,9 +11,9 @@ public:
 	virtual ~Iterable () = default;
 
 	// you should use smart pointer wrapper
-	virtual Iterator <E> * iterator () const = 0;
+	virtual Iterator <E> * iterator () = 0;
 
-	virtual void forEach (Consumer <E> consume) const {
+	virtual void forEach (Consumer <E> consume) {
 		auto it = std::unique_ptr <Iterator <E>>(this->iterator());
 		while (it->hasNext()) {
 			consume(it->next());

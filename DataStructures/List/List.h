@@ -1,27 +1,43 @@
-#pragma once
 #ifndef List_ADT
 #define List_ADT
+#include <memory>
 #include "../Collection/Collection.h"
 #include "ListIterator.h"
+#include "../function.h"
+#include "../Exception/NoSuchElementException.h"
+#include "../Exception/IndexOutOfBoundsException.h"
+#include "../Sort/Timsort.h"
 
-template <class E>
-class ListIterator;
+using std::unique_ptr;
 
 // An iterator over a collection.
 template <class E>
-class List : public virtual Collection <E> {
+class List : public Collection <E> {
 protected:
-	bool isElementIndex (int index);
+	bool isElementIndex (int index) const {
+		return !(index < 0 || index >= this->size());
+	}
+
 public:
-	List () {
+	List () = default;
+
+	virtual ~List () = default;
+
+	virtual void add (const E & e) override {
+		this->insert(this->size(), e);
 	}
 
-	virtual ~List () {
+	virtual void sort (Comparator <E> compare) {
+		int size = this->size();
+		auto ar = this->toArray();
+		timsort(ar, 0, size, compare);
+		auto it = unique_ptr <ListIterator <E>>(this->iterator());
+		for (int i = 0; i < size; i++) {
+			it->next();
+			it->set(ar[i]);
+		}
+		delete[] ar;
 	}
-
-	virtual void add (const E & e) override;
-
-	virtual void sort (int (*compare) (const E &, const E &));
 
 	virtual E & get (int index) const = 0;
 
@@ -33,14 +49,30 @@ public:
 
 	virtual E remove (int index) = 0;
 
-	virtual int indexOf (const E & e) const;
+	virtual int indexOf (const E & e) {
+		auto it = unique_ptr <ListIterator <E>>(this->iterator());
+		while (it->hasNext()) {
+			if (e == it->next()) {
+				return it->previousIndex();
+			}
+		}
+		throw NoSuchElementException();
+	}
 
-	virtual int lastIndexOf (const E & e) const;
+	virtual int lastIndexOf (const E & e) {
+		auto it = unique_ptr <ListIterator <E>>(this->iterator());
+		while (it->hasPrevious()) {
+			if (e == it->previous()) {
+				return it->nextIndex();
+			}
+		}
+		throw NoSuchElementException();
+	}
 
-	virtual List <E> & subList (int fromIndex, int toIndex) = 0;
+	virtual List <E> * subList (int fromIndex, int toIndex) const
+	=
+	0;
 
-	virtual Iterator <E> iterator () const override;
-
-	virtual ListIterator <E> listIterator () const;
+	virtual ListIterator <E> * iterator () override = 0;
 };
 #endif

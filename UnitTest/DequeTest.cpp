@@ -3,7 +3,7 @@
 #include "Exception/CollectionEmptyException.h"
 #include "Exception/ConcurrentModificationException.h"
 #include <iostream>
-#include "base.h"
+#include "Base.h"
 
 BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 
@@ -168,22 +168,22 @@ BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 	}
 
 	BOOST_AUTO_TEST_CASE(TestingAddDerivedClass) {
-		Object b = Object(1);
+		Base b = Base(1);
 		DerivedObject d = DerivedObject(2, 3);
-		Object & baseRef1 = b;
-		Object & baseRef2 = d;
+		Base & baseRef1 = b;
+		Base & baseRef2 = d;
 		baseRef1.print();
 		baseRef2.print();
-		Object baseValue1 = baseRef1;
-		Object baseValue2 = baseRef2;
+		Base baseValue1 = baseRef1;
+		Base baseValue2 = baseRef2;
 		baseValue1.print();
 		baseValue2.print();
-		LinkedList <Object> list = LinkedList <Object>();
+		LinkedList <Base> list = LinkedList <Base>();
 		list.add(b);
 		// object slicing
 		list.add(d);
-		Object b1 = list.removeFirst();
-		Object b2 = list.removeFirst();
+		Base b1 = list.removeFirst();
+		Base b2 = list.removeFirst();
 		b1.print();
 		b2.print();
 		BOOST_CHECK(false); // leave for future
