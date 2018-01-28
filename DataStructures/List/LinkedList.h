@@ -175,10 +175,8 @@ public:
 		this->head->prev = this->head;
 	}
 
-	using Deque <E>::add;
-
-	virtual void add (const E & e) {
-		Deque <E>::add(e);
+	virtual void add (const E & e) override {
+		this->Deque <E>::add(e);
 	}
 
 	virtual ~LinkedList () {
@@ -229,7 +227,7 @@ public:
 		this->insertBefore(this->node(index), e);
 	}
 
-	E remove (int index) override {
+	virtual E remove (int index) override {
 		return this->unlinkNode(this->node(index));
 	}
 
