@@ -24,11 +24,19 @@ BOOST_FIXTURE_TEST_SUITE(ADTTest, FADT)
 	BOOST_AUTO_TEST_CASE(TestingSizeInitialZero) {
 		for (auto & adt : adts) {
 			BOOST_CHECK_EQUAL(0, adt->size());
+			adt->add(1);
+			BOOST_CHECK_EQUAL(1, adt->size());
+			adt->clear();
+			BOOST_CHECK_EQUAL(0, adt->size());
 		}
 	}
 
 	BOOST_AUTO_TEST_CASE(TestingisEmpty) {
 		for (auto & adt : adts) {
+			BOOST_CHECK(adt->isEmpty());
+			adt->add(1);
+			BOOST_CHECK(!adt->isEmpty());
+			adt->clear();
 			BOOST_CHECK(adt->isEmpty());
 		}
 	}
