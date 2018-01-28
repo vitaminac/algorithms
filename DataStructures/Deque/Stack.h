@@ -3,7 +3,7 @@
 #include "../Collection/ADT.h"
 
 template <class E>
-class Stack : public virtual ADT <E> {
+class Stack : virtual public ADT <E> {
 public:
 
 	virtual ~Stack () = default;

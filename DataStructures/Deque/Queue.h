@@ -3,7 +3,7 @@
 #include "../Collection/ADT.h"
 
 template <class E>
-class Queue : public virtual ADT <E> {
+class Queue : virtual public ADT <E> {
 public:
 
 	virtual ~Queue () = default;

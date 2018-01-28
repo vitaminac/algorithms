@@ -7,7 +7,7 @@ using std::unique_ptr;
 
 // An iterator over a collection.
 template <class E>
-class Collection : public Iterable <E>, public virtual ADT <E> {
+class Collection : public Iterable <E>, virtual public ADT <E> {
 public:
 	Collection () = default;
 	virtual ~Collection () = default;
