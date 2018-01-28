@@ -1,6 +1,5 @@
 #ifndef List_ADT
 #define List_ADT
-#include <memory>
 #include "../Collection/Collection.h"
 #include "ListIterator.h"
 #include "../function.h"

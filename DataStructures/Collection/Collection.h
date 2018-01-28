@@ -1,6 +1,5 @@
 #ifndef Collection_ADT_H
 #define Collection_ADT_H
-#include <memory>
 #include "Iterable.h"
 #include "ADT.h"
 
@@ -14,7 +13,7 @@ public:
 	virtual ~Collection () = default;
 
 	virtual bool contains (const E & e) {
-		unique_ptr <Iterator <E>> it = unique_ptr <Iterator <E>>(this->iterator());
+		auto it = unique_ptr <Iterator <E>>(this->iterator());
 		while (it->hasNext()) {
 			if (e == it->next()) {
 				return true;

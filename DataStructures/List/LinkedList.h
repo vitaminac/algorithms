@@ -1,4 +1,3 @@
-#pragma once
 #ifndef LinkedList_H
 #define LinkedList_H
 #include "../Exception/CollectionEmptyException.h"
@@ -183,7 +182,7 @@ public:
 	}
 
 	virtual ~LinkedList () {
-		this->LinkedList<E>::clear();
+		this->LinkedList <E>::clear();
 		free(const_cast <Node *>(this->head));
 	}
 
