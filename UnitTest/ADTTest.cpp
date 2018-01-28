@@ -33,4 +33,32 @@ BOOST_FIXTURE_TEST_SUITE(ADTTest, FADT)
 		}
 	}
 
+	BOOST_AUTO_TEST_CASE(TestingAdd) {
+		for (auto & adt : adts) {
+			for (int i = 0; i < 100; i++) {
+				BOOST_CHECK_EQUAL(i, adt->size());
+				adt->add(i);
+				BOOST_CHECK_EQUAL(i + 1, adt->size());
+			}
+			adt->clear();
+			BOOST_CHECK(adt->isEmpty());
+		}
+	}
+
+	BOOST_AUTO_TEST_CASE(TestingAddAll) {
+		auto list = LinkedList <int>();
+		Iterable <int> & iterable = list;
+		for (int i = 0; i < 100; i++) {
+			list.add(i);
+		}
+		BOOST_CHECK_EQUAL(100, list.size());
+		for (auto & adt : adts) {
+			BOOST_CHECK(adt->isEmpty());
+			adt->addAll(list);
+			BOOST_CHECK_EQUAL(100, adt->size());
+			adt->clear();
+			BOOST_CHECK(adt->isEmpty());
+		}
+	}
+
 BOOST_AUTO_TEST_SUITE_END()

@@ -1,10 +1,7 @@
 #ifndef ADT_H
 #define ADT_H
-#include <functional>
 #include "Iterable.h"
 #include "../function.h"
-
-using namespace std::placeholders;
 
 template <class E>
 class ADT {
@@ -16,7 +13,10 @@ public:
 	virtual void add (const E & e) = 0;
 
 	virtual void addAll (Iterable <E> & iterable) {
-		iterable.forEach(std::bind(&ADT::add, this, _1));
+		iterable.forEach([this] (const E & e)
+		{
+			this->add(e);
+		});
 	}
 
 	virtual int size () const = 0;
@@ -26,5 +26,9 @@ public:
 	}
 
 	virtual void clear (Consumer <E> consume) = 0;
+
+	inline void clear () {
+		this->clear(doNothing <E>);
+	}
 };
 #endif

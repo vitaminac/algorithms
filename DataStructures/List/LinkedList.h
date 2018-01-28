@@ -29,7 +29,7 @@ class LinkedList : public Deque <E>, public List <E> {
 			this->nextNode = this->list->getFirstNode();
 		};
 
-		virtual ~LinkedListIterator () = default;
+		virtual ~LinkedListIterator() = default;
 
 		virtual bool hasNext () const override {
 			return this->nextNodeIndex < list->size();
@@ -46,7 +46,7 @@ class LinkedList : public Deque <E>, public List <E> {
 			this->lastRetNode = this->nextNode;
 			this->nextNode = this->nextNode->next;
 			this->lastRetIndex = (this->nextNodeIndex)++;
-			return this->nextNode->item;
+			return this->lastRetNode->item;
 		}
 
 		virtual E & previous () override {
@@ -66,9 +66,10 @@ class LinkedList : public Deque <E>, public List <E> {
 			} else if (this->lastRetIndex < this->nextNodeIndex) {
 				--(this->nextNodeIndex);
 			}
+			auto removedNode = this->lastRetNode;
 			this->lastRetNode = nullptr;
 			this->lastRetIndex = -1;
-			return this->list->unlinkNode(lastRetNode);
+			return this->list->unlinkNode(removedNode);
 		}
 
 		virtual int nextIndex () const override {
@@ -229,7 +230,7 @@ public:
 		this->insertBefore(this->node(index), e);
 	}
 
-	E remove (int index) {
+	E remove (int index) override {
 		return this->unlinkNode(this->node(index));
 	}
 

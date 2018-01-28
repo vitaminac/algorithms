@@ -45,7 +45,10 @@ public:
 	}
 
 	virtual void removeAll (Collection <E> & c) {
-		c.forEach(std::bind(&Collection::add, this, _1));
+		c.forEach([this] (const E & e)
+		{
+			this->add(e);
+		});
 	}
 
 	virtual void clear (Consumer <E> consume) override {
