@@ -29,7 +29,7 @@ class LinkedList : public Deque <E>, public List <E> {
 			this->nextNode = this->list->getFirstNode();
 		};
 
-		virtual ~LinkedListIterator() = default;
+		virtual ~LinkedListIterator () = default;
 
 		virtual bool hasNext () const override {
 			return this->nextNodeIndex < list->size();
@@ -183,7 +183,7 @@ public:
 	}
 
 	virtual ~LinkedList () {
-		LinkedList <E>::clear();
+		this->LinkedList<E>::clear();
 		free(const_cast <Node *>(this->head));
 	}
 
