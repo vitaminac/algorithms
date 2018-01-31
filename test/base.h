@@ -1,5 +1,7 @@
-#pragma once
+#ifndef base_test_type
+#define base_test_type
 #include <iostream>
+#include <cstring>
 using std::string;
 
 typedef struct Base {
@@ -47,3 +49,4 @@ public:
 		return Base::toString() + "and also i'm derived class " + std::to_string(this->d);
 	}
 } DerivedObject;
+#endif

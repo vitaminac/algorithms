@@ -1,6 +1,6 @@
 #define BOOST_TEST_DYN_LINK
 #include <boost/test/unit_test.hpp>
-#include "Base.h"
+#include "base.h"
 
 BOOST_AUTO_TEST_SUITE(AnotherTest)
 

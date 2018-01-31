@@ -1,0 +1,9 @@
+find
+(.*)(-\$\{Boost_LIB_VERSION\}$)
+replace
+$1$2\n$1-x64-${Boost_LIB_VERSION}
+
+
+foreach(abcd_name IN LISTS _boost_DEBUG_NAMES)
+    message(${abcd_name})
+endforeach()
