@@ -1,11 +1,12 @@
 #ifndef List_ADT
 #define List_ADT
+#include <memory>
 #include "../Collection/Collection.h"
 #include "ListIterator.h"
 #include "../function.h"
 #include "../Exception/NoSuchElementException.h"
 #include "../Exception/IndexOutOfBoundsException.h"
-#include "../Sort/Timsort.h"
+#include "../sort/sorting.h"
 
 using std::unique_ptr;
 
@@ -29,7 +30,7 @@ public:
 	virtual void sort (Comparator <E> compare) {
 		int size = this->size();
 		auto ar = this->toArray();
-		timsort(ar, 0, size, compare);
+		Sorting <E>::timsort(ar, 0, size, compare);
 		auto it = unique_ptr <ListIterator <E>>(this->iterator());
 		for (int i = 0; i < size; i++) {
 			it->next();
