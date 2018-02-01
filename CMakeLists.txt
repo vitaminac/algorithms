@@ -47,7 +47,13 @@ IF(Boost_FOUND)
 	include_directories(SYSTEM ${Boost_INCLUDE_DIRS} ${DataStructures_SOURCE_DIR})
 	link_directories(${Boost_LIBRARY_DIRS})
 
-	add_executable(UnitTest 
+	add_executable(TestDriven 
+	                           test/UnitTest.cpp
+							   test/testDriven.cpp
+							   )
+    target_link_libraries(TestDriven ${Boost_LIBRARIES})
+
+	add_executable(DataStructuresUnitTest 
 	                           test/UnitTest.cpp
 							   test/ADTTest.cpp
 							   test/AnotherTest.cpp
@@ -55,12 +61,20 @@ IF(Boost_FOUND)
 							   test/DequeTest.cpp
 							   test/StackTest.cpp
 							   )
-	target_link_libraries(UnitTest ${Boost_LIBRARIES})
+	target_link_libraries(DataStructuresUnitTest ${Boost_LIBRARIES})
+
+	add_executable(sortingTest 
+	                           test/UnitTest.cpp
+	                           test/sortingTest
+							   )
+	target_link_libraries(sortingTest ${Boost_LIBRARIES})
 
 	SET(CTEST_OUTPUT_ON_FAILURE TRUE)
 
 	add_test(build_test "${CMAKE_COMMAND}" --build ${CMAKE_BINARY_DIR})
-	add_test(TestDriven UnitTest)
+	add_test(TestDriven TestDriven)
+	add_test(DataStructuresUnitTest DataStructuresUnitTest)
+	add_test(sortingTest sortingTest)
 ENDIF()
 
 add_executable(HelloWorld HelloWorld.cpp)
