@@ -1,13 +1,13 @@
 #define BOOST_TEST_DYN_LINK
 #include <boost/test/unit_test.hpp>
-#include "base.h"
+#include "object.h"
 
 BOOST_AUTO_TEST_SUITE(AnotherTest)
 
 	BOOST_AUTO_TEST_CASE(TestingDelete) {
-		Base * o = new Base(1);
+		Object * o = new Object(1);
 		BOOST_CHECK_EQUAL(1, o->getB());
-		Base * & o2 = o;
+		Object * & o2 = o;
 		BOOST_CHECK_EQUAL(o, o2);
 		delete o2;
 		auto x = o->getB();
