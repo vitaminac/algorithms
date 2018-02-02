@@ -24,6 +24,18 @@ struct FCollection {
 };
 
 BOOST_FIXTURE_TEST_SUITE(CollectionTest, FCollection)
+	BOOST_AUTO_TEST_CASE(TestingIterator) {
+		for (unique_ptr <Collection <int>> & collection : this->collections) {
+			auto it = unique_ptr <Iterator <int>>(collection->iterator());
+			int i = 0;
+			while (it->hasNext()) {
+				BOOST_CHECK_EQUAL(i++, it->next());
+			}
+			BOOST_CHECK_EQUAL(i, collection->size());
+			BOOST_CHECK_EQUAL(100, collection->size());
+		}
+	}
+
 	BOOST_AUTO_TEST_CASE(TestingContains) {
 		for (unique_ptr <Collection <int>> & collection : this->collections) {
 			BOOST_CHECK(collection->contains(0));
