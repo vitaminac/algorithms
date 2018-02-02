@@ -1,5 +1,5 @@
-#ifndef function_ADT
-#define function_ADT
+#ifndef consumer_h
+#define consumer_h
 #include <functional>
 using std::function;
 

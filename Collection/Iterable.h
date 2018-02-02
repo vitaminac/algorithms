@@ -2,7 +2,7 @@
 #define Iterable_H
 #include <memory>
 #include "Iterator.h"
-#include "function/function.h"
+#include "function/consumer.h"
 
 template <class E>
 class Iterable {
