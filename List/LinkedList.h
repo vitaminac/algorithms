@@ -1,20 +1,15 @@
 #ifndef LinkedList_H
 #define LinkedList_H
-#include "../Exception/CollectionEmptyException.h"
-#include "../Exception/ConcurrentModificationException.h"
-#include "../Deque/Deque.h"
+#include "Exception/CollectionEmptyException.h"
+#include "Exception/ConcurrentModificationException.h"
+#include "Deque/Deque.h"
 #include "List.h"
+#include "node/linkedNode.h"
 
 template <class E>
 class LinkedList : public Deque <E>, public List <E> {
-	typedef struct Node {
-		E item;
-		struct Node * prev;
-		struct Node * next;
 
-		explicit Node (E item, Node * prev, Node * next) : item(item), prev(prev), next(next) {
-		}
-	} Node;
+	using Node = LinkedNode <E>;
 
 	class LinkedListIterator : public ListIterator <E> {
 	private:
@@ -43,17 +38,17 @@ class LinkedList : public Deque <E>, public List <E> {
 				throw NoSuchElementException();
 			}
 			this->lastRetNode = this->nextNode;
-			this->nextNode = this->nextNode->next;
+			this->nextNode = Node::nextNode(this->nextNode);
 			this->lastRetIndex = (this->nextNodeIndex)++;
-			return this->lastRetNode->item;
+			return Node::getItem(this->lastRetNode);
 		}
 
 		virtual E & previous () override {
 			if (!this->hasPrevious())
 				throw new NoSuchElementException();
-			this->lastRetNode = this->nextNode = this->nextNode->prev;
+			this->lastRetNode = this->nextNode = Node::prevNode(this->nextNode);
 			this->lastRetIndex = --(this->nextNodeIndex);
-			return this->nextNode->item;
+			return Node::getItem(this->nextNode);
 		}
 
 		virtual E remove () override {
@@ -61,7 +56,7 @@ class LinkedList : public Deque <E>, public List <E> {
 				throw ConcurrentModificationException();
 			}
 			if (this->nextNode == this->lastRetNode) {
-				this->nextNode = this->lastRetNode->next;
+				this->nextNode = Node::nextNode(this->lastRetNode);
 			} else if (this->lastRetIndex < this->nextNodeIndex) {
 				--(this->nextNodeIndex);
 			}
@@ -83,7 +78,7 @@ class LinkedList : public Deque <E>, public List <E> {
 			if (this->lastRetNode == nullptr) {
 				throw NoSuchElementException();
 			}
-			this->lastRetNode->item = e;
+			Node::setItem(this->lastRetNode, e);
 		}
 
 		virtual void add (const E & e) override {
@@ -102,7 +97,7 @@ private:
 	Node * const head = reinterpret_cast <Node *>(malloc(sizeof(Node)));
 
 	Node * getFirstNodeUncheck () const {
-		return this->head->next;
+		return Node::nextNode(this->head);
 	}
 
 	Node * getFirstNode () const {
@@ -114,7 +109,7 @@ private:
 	}
 
 	Node * getLastNodeUncheck () const {
-		return this->head->prev;
+		return Node::prevNode(this->head);
 	}
 
 	Node * getLastNode () const {
@@ -126,29 +121,21 @@ private:
 	}
 
 	E unlinkNode (Node * node) {
-		Node * prevNode = node->prev;
-		Node * nextNode = node->next;
-		E element = node->item;
-		prevNode->next = nextNode;
-		nextNode->prev = prevNode;
-		delete node;
 		--(this->size_);
-		return element;
+		return Node::unlinkNode(node);
 	}
 
 	void linkNode (Node * prevNode, const E & element, Node * nextNode) {
-		auto newNode = new Node(element, prevNode, nextNode);
-		prevNode->next = newNode;
-		nextNode->prev = newNode;
+		Node::linkNode(prevNode, element, nextNode);
 		++(this->size_);
 	}
 
 	void insertBefore (Node * node, const E & element) {
-		this->linkNode(node->prev, element, node);
+		this->linkNode(Node::prevNode(node), element, node);
 	}
 
 	void insertAfter (Node * node, const E & element) {
-		this->linkNode(node, element, node->next);
+		this->linkNode(node, element, Node::nextNode(node));
 	}
 
 	Node * node (int index) const {
@@ -157,11 +144,11 @@ private:
 			if (index < (this->size() >> 1)) {
 				node = this->getFirstNode();
 				for (int i = 0; i < index; i++)
-					node = node->next;
+					node = Node::nextNode(node);
 			} else {
 				node = this->getLastNode();
 				for (int i = size() - 1; i > index; i--)
-					node = node->prev;
+					node = Node::prevNode(node);
 			}
 			return node;
 		} else {
@@ -171,8 +158,7 @@ private:
 
 public:
 	explicit LinkedList () {
-		this->head->next = this->head;
-		this->head->prev = this->head;
+		Node::linkNode(this->head, this->head, this->head);
 	}
 
 	virtual void add (const E & e) override {
@@ -189,11 +175,11 @@ public:
 	}
 
 	virtual E & getFirst () const override {
-		return this->getFirstNode()->item;
+		return Node::getItem(this->getFirstNode());
 	}
 
 	virtual E & getLast () const override {
-		return this->getLastNode()->item;
+		return Node::getItem(this->getLastNode());
 	}
 
 	virtual void addFirst (const E & e) override {
@@ -213,13 +199,13 @@ public:
 	}
 
 	virtual E & get (int index) const override {
-		return this->node(index)->item;
+		return Node::getItem(this->node(index));
 	}
 
 	virtual E set (int index, const E & e) override {
 		Node * node = this->node(index);
-		E oldVal = node->item;
-		node->item = e;
+		E oldVal = Node::getItem(node);
+		Node::setItem(node, e);
 		return oldVal;
 	}
 
