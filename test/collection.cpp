@@ -36,6 +36,17 @@ BOOST_FIXTURE_TEST_SUITE(CollectionTest, FCollection)
 		}
 	}
 
+	BOOST_AUTO_TEST_CASE(TestingForEach) {
+		for (unique_ptr <Collection <int>> & collection : this->collections) {
+			int ac = 0;
+			collection->forEach([&ac] (int i)
+			{
+				ac += i;
+			});
+			BOOST_CHECK_EQUAL((0 + 99) * 50, ac);
+		}
+	}
+
 	BOOST_AUTO_TEST_CASE(TestingContains) {
 		for (unique_ptr <Collection <int>> & collection : this->collections) {
 			BOOST_CHECK(collection->contains(0));

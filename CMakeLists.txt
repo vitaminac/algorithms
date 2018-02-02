@@ -57,7 +57,7 @@ IF(Boost_FOUND)
 	                           test/UnitTest.cpp
 							   test/ADTTest.cpp
 							   test/AnotherTest.cpp
-							   test/CollectionTest.cpp
+							   test/collection.cpp
 							   test/DequeTest.cpp
 							   test/StackTest.cpp
 							   )
