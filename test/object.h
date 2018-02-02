@@ -10,11 +10,11 @@ private:
 	int attribute;
 public:
 	explicit Base (const int b) : attribute(b) {
-		std::cout << "create Base class with " << b << std::endl;
+		// std::cout << "create Base class with " << b << std::endl;
 	}
 
 	virtual ~Base () {
-		std::cout << "Base class's" << this->attribute << " destructor" << std::endl;
+		// std::cout << "Base class's" << this->attribute << " destructor" << std::endl;
 	}
 
 	virtual string toString () {
