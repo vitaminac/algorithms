@@ -29,11 +29,11 @@ public:
 		return this->attribute;
 	}
 
-	inline bool operator == (const Base & b) const {
-		return this->getB() == b.getB();
+	virtual inline bool operator == (const Base & other) const {
+		return this->getB() == other.getB();
 	}
 
-	inline bool operator< (const Base & other) const {
+	virtual inline bool operator < (const Base & other) const {
 		return this->getB() < other.getB();
 	}
 } Object;
@@ -52,6 +52,19 @@ public:
 
 	virtual string toString () override {
 		return Base::toString() + "and also i'm Derived class " + std::to_string(this->d);
+	}
+
+	inline int getD () const {
+		return this->d;
+	}
+
+	virtual inline bool operator == (const Derived & other) const {
+		return Base::operator==(other) && (this->getD() == other.getD());
+	}
+
+	virtual inline bool operator < (const Derived & other) const {
+
+		return Base::operator<(other) || (this->getD() < other.getD());
 	}
 } ConcreteObject;
 #endif
