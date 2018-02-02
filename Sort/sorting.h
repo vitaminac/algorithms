@@ -1,6 +1,6 @@
 #ifndef Sorting_Algorithms_H
 #define  Sorting_Algorithms_H
-#include "../function.h"
+#include "function/comparator.h"
 
 template <class E>
 class Sorting {

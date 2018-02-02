@@ -69,12 +69,19 @@ IF(Boost_FOUND)
 							   )
 	target_link_libraries(sortingTest ${Boost_LIBRARIES})
 
+	add_executable(objectTest 
+	                           test/UnitTest.cpp
+	                           test/object
+							   )
+	target_link_libraries(objectTest ${Boost_LIBRARIES})
+
 	SET(CTEST_OUTPUT_ON_FAILURE TRUE)
 
 	add_test(build_test "${CMAKE_COMMAND}" --build ${CMAKE_BINARY_DIR})
 	add_test(TestDriven TestDriven)
 	add_test(DataStructuresUnitTest DataStructuresUnitTest)
 	add_test(sortingTest sortingTest)
+	add_test(objectTest objectTest)
 ENDIF()
 
 add_executable(HelloWorld HelloWorld.cpp)

@@ -1,12 +1,12 @@
 #ifndef List_ADT
 #define List_ADT
 #include <memory>
-#include "../Collection/Collection.h"
+#include "Collection/Collection.h"
 #include "ListIterator.h"
-#include "../function.h"
-#include "../Exception/NoSuchElementException.h"
-#include "../Exception/IndexOutOfBoundsException.h"
-#include "../sort/sorting.h"
+#include "function/comparator.h"
+#include "Exception/NoSuchElementException.h"
+#include "Exception/IndexOutOfBoundsException.h"
+#include "sort/sorting.h"
 
 using std::unique_ptr;
 

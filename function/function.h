@@ -6,9 +6,6 @@ using std::function;
 template <typename E>
 using Consumer = function <void  (const E &)>;
 
-template <typename E>
-using Comparator = function <int  (const E &, const E &)>;
-
 template <class E>
 inline void freeMemory (const E & e) {
 	if (e != nullptr) {

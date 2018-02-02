@@ -1,7 +1,7 @@
 #ifndef ADT_H
 #define ADT_H
 #include "Iterable.h"
-#include "../function.h"
+#include "function/function.h"
 
 template <class E>
 class ADT {

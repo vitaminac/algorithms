@@ -32,6 +32,10 @@ public:
 	inline bool operator == (const Base & b) const {
 		return this->getB() == b.getB();
 	}
+
+	inline bool operator< (const Base & other) const {
+		return this->getB() < other.getB();
+	}
 } Object;
 
 typedef struct Derived : Base {
