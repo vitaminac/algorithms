@@ -51,7 +51,7 @@ public:
 	}
 
 	virtual string toString () override {
-		return Base::toString() + "and also i'm Derived class " + std::to_string(this->d);
+		return Base::toString() + " and also i'm Derived class " + std::to_string(this->d);
 	}
 
 	inline int getD () const {
