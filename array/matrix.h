@@ -30,6 +30,32 @@ public:
 		return os;
 	}
 
+	virtual Matrix <E> * operator* (const Matrix <E> & right) const {
+		const int n = this->dim->operator[](0);
+		const int m = right.dim->operator[](1);
+		const int p = this->dim->operator[](1);
+		assert(p == right.dim->operator[](0));
+		auto elements = new E[n * m];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				E c = 0;
+				for (int k = 0; k < p; k++) {
+					c += this->elements[i * n + k] * right.elements[k * p + j];
+				}
+				elements[i * n + j] = c;
+			}
+		}
+		return new Matrix <E>(elements, new Dimension(new int[2]{n, m}, 2));
+	}
+
+	virtual bool operator== (const Matrix <E> & right) const {
+		if (*this->dim == *right.dim) {
+			return Vector <E>::operator==(right);
+		} else {
+			return false;
+		}
+	}
+
 	static Matrix <E> * eye (int n) {
 		auto elements = new E[n * n];
 		for (int i = 0; i < n; i++) {
@@ -42,6 +68,10 @@ public:
 			}
 		}
 		return new Matrix(elements, new Dimension(new int[2] {n, n}, 2));
+	}
+
+	static Matrix <E> * square (E * elements, int n) {
+		return new Matrix <int>(elements, new Dimension(new int[2]{n, n}, 2));
 	}
 };
 #endif

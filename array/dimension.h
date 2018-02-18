@@ -1,35 +1,42 @@
 #ifndef dimension_h
 #define dimension_h
+#include "vector.h"
 
-class Dimension {
+class Dimension : private Vector <int> {
 private:
-	const int * const dims;
-	const int cardinality;
 public:
-	Dimension (const int * dims, const int cardinality): dims(dims), cardinality(cardinality) {
-	}
-
-	Dimension (const Dimension & dim) : dims(dim.dims), cardinality(dim.cardinality) {
+	Dimension (const int * dims, const int cardinality): Vector <int>(dims, cardinality) {
 	}
 
 	virtual ~Dimension () {
-		delete[] dims;
 	}
 
-	int size () const {
-		int dim = 1;
-		for (int i = 0; i < this->cardinality; i++) {
-			dim *= this->dims[i];
-		}
-		return dim;
+	inline int cardinality () const {
+		return this->dim;
+	}
+
+	inline const int * dims () const {
+		return this->elements;
+	}
+
+	inline int size () const {
+		return this->product();
 	}
 
 	const int * begin () const {
-		return this->dims;
+		return this->dims();
 	}
 
 	const int * end () const {
-		return &this->dims[this->cardinality - 1];
+		return &this->dims()[this->cardinality() - 1];
+	}
+
+	inline virtual bool operator== (const Dimension & right) const {
+		return Vector <int>::operator==(right);
+	}
+
+	inline virtual const int & operator[] (const int index) const override {
+		return Vector <int>::operator[](index);
 	}
 };
 #endif

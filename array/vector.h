@@ -5,12 +5,11 @@
 
 template <class E>
 class Vector {
-private:
-	const int dim;
 protected:
-	E * const elements;
+	const E * const elements;
+	const int dim;
 public:
-	Vector (E * elements, int dim) : elements(elements), dim(dim) {
+	Vector (const E * elements, const int dim) : elements(elements), dim(dim) {
 	}
 
 	virtual ~Vector () {
@@ -37,6 +36,18 @@ public:
 		} else {
 			return false;
 		}
+	}
+
+	inline virtual const E & operator[] (const int index) const {
+		return this->elements[index];
+	}
+
+	E product () const {
+		E prod = 1;
+		for (int i = 0; i < this->dim; i++) {
+			prod *= this->elements[i];
+		}
+		return prod;
 	}
 
 	friend std::ostream & operator<< (std::ostream & os, const Vector <E> & vector) {
