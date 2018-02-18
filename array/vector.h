@@ -6,23 +6,24 @@
 template <class E>
 class Vector {
 private:
-	E * const elements;
 	const int dim;
+protected:
+	E * const elements;
 public:
 	Vector (E * elements, int dim) : elements(elements), dim(dim) {
 	}
 
 	virtual ~Vector () {
-		delete this->elements;
+		delete[] this->elements;
 	}
 
-	virtual Vector <E> operator* (const Vector <E> & right) const {
+	virtual Vector <E> * operator* (const Vector <E> & right) const {
 		assert(right.dim == this->dim);
 		E * elements = new E[this->dim];
 		for (int i = 0; i < this->dim; i++) {
 			elements[i] = this->elements[i] * right.elements[i];
 		}
-		return Vector <E>(elements, this->dim);
+		return new Vector <E>(elements, this->dim);
 	}
 
 	virtual bool operator== (const Vector <E> & right) const {

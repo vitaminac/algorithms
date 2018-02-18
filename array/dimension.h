@@ -6,15 +6,30 @@ private:
 	const int * const dims;
 	const int cardinality;
 public:
-	Dimension (int * dims, int cardinality): dims(dims), cardinality(cardinality) {
+	Dimension (const int * dims, const int cardinality): dims(dims), cardinality(cardinality) {
+	}
+
+	Dimension (const Dimension & dim) : dims(dim.dims), cardinality(dim.cardinality) {
+	}
+
+	virtual ~Dimension () {
+		delete[] dims;
 	}
 
 	int size () const {
-		int sum = 0;
+		int dim = 1;
 		for (int i = 0; i < this->cardinality; i++) {
-			sum += *(dims + i);
+			dim *= this->dims[i];
 		}
-		return sum;
+		return dim;
+	}
+
+	const int * begin () const {
+		return this->dims;
+	}
+
+	const int * end () const {
+		return &this->dims[this->cardinality - 1];
 	}
 };
 #endif

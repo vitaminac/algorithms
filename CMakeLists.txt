@@ -78,6 +78,7 @@ IF(Boost_FOUND)
 	add_executable(arrayTest 
 	                           test/array/array.cpp
 	                           test/array/vector.cpp
+							   test/array/matrix.cpp
 							   )
 	target_link_libraries(arrayTest ${Boost_LIBRARIES})
 
