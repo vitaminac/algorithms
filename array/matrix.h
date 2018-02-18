@@ -48,6 +48,36 @@ public:
 		return new Matrix <E>(elements, new Dimension(new int[2]{n, m}, 2));
 	}
 
+	virtual Matrix <E> * operator+ (const Matrix <E> & right) const {
+		const int n = this->dim->operator[](0);
+		const int m = right.dim->operator[](1);
+		assert(n == right.dim->operator[](0));
+		assert(m == right.dim->operator[](1));
+		auto elements = new E[n * m];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				int idx = i * n + j;
+				elements[idx] = this->elements[idx] + right.elements[idx];
+			}
+		}
+		return new Matrix <E>(elements, new Dimension(new int[2]{n, m}, 2));
+	}
+
+	virtual Matrix <E> * operator- (const Matrix <E> & right) const {
+		const int n = this->dim->operator[](0);
+		const int m = right.dim->operator[](1);
+		assert(n == right.dim->operator[](0));
+		assert(m == right.dim->operator[](1));
+		auto elements = new E[n * m];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				int idx = i * n + j;
+				elements[idx] = this->elements[idx] - right.elements[idx];
+			}
+		}
+		return new Matrix <E>(elements, new Dimension(new int[2]{n, m}, 2));
+	}
+
 	virtual bool operator== (const Matrix <E> & right) const {
 		if (*this->dim == *right.dim) {
 			return Vector <E>::operator==(right);
