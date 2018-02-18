@@ -75,6 +75,12 @@ IF(Boost_FOUND)
 							   )
 	target_link_libraries(objectTest ${Boost_LIBRARIES})
 
+	add_executable(arrayTest 
+	                           test/array/array.cpp
+	                           test/array/vector.cpp
+							   )
+	target_link_libraries(arrayTest ${Boost_LIBRARIES})
+
 	SET(CTEST_OUTPUT_ON_FAILURE TRUE)
 
 	add_test(build_test "${CMAKE_COMMAND}" --build ${CMAKE_BINARY_DIR})
@@ -82,6 +88,7 @@ IF(Boost_FOUND)
 	add_test(DataStructuresUnitTest DataStructuresUnitTest)
 	add_test(sortingTest sortingTest)
 	add_test(objectTest objectTest)
+	add_test(arrayTest arrayTest)
 ENDIF()
 
 add_executable(HelloWorld HelloWorld.cpp)
