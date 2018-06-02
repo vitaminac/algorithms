@@ -1,5 +1,5 @@
-#ifndef comparator_h
-#define comparator_h
+#ifndef Comparator_H
+#define Comparator_H
 #include <functional>
 using std::function;
 

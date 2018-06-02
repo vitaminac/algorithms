@@ -2,15 +2,15 @@
 #include <boost/test/unit_test.hpp>
 #include <memory>
 #include <vector>
-#include "Deque/Stack.h"
-#include "List/LinkedList.h"
+#include "adt/Stack.h"
+#include "collection/LinkedList.h"
 
 using std::vector;
 using std::make_unique;
 using std::unique_ptr;
 
 struct FStack {
-	FStack () : size(1) {
+	FStack () {
 		BOOST_TEST_MESSAGE("setup fixture");
 		this->stacks.push_back(make_unique <LinkedList <int>>());
 	}
@@ -20,7 +20,6 @@ struct FStack {
 	}
 
 	vector <unique_ptr <Stack <int>>> stacks = vector <unique_ptr <Stack <int>>>();
-	int size;
 };
 
 BOOST_FIXTURE_TEST_SUITE(StackTesting, FStack)
@@ -29,10 +28,9 @@ BOOST_FIXTURE_TEST_SUITE(StackTesting, FStack)
 		for (const auto & stack : this->stacks) {
 			for (int i = 1; i <= 100; i++) {
 				stack->push(i);
-				BOOST_CHECK_EQUAL(i, stack->size());
 			}
 			for (int i = 100; i > 0; i--) {
-				BOOST_CHECK_EQUAL(i, stack->peek());
+				BOOST_CHECK_EQUAL(i, stack->last());
 				BOOST_CHECK_EQUAL(i, stack->pop());
 			}
 		}

@@ -1,8 +1,7 @@
 #ifndef Iterable_H
 #define Iterable_H
-#include <memory>
 #include "Iterator.h"
-#include "function/consumer.h"
+#include "Stream.h"
 
 template <class E>
 class Iterable {
@@ -13,11 +12,8 @@ public:
 	// you should use smart pointer wrapper
 	virtual Iterator <E> * iterator () = 0;
 
-	virtual void forEach (Consumer <E> consume) {
-		auto it = std::unique_ptr <Iterator <E>>(this->iterator());
-		while (it->hasNext()) {
-			consume(it->next());
-		}
-	}
+	Stream <E> stream () {
+		return Stream <E>(this->iterator());
+	};
 };
 #endif

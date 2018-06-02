@@ -55,11 +55,9 @@ IF(Boost_FOUND)
 
 	add_executable(DataStructuresUnitTest 
 	                           test/UnitTest.cpp
-							   test/ADTTest.cpp
-							   test/AnotherTest.cpp
-							   test/collection.cpp
-							   test/DequeTest.cpp
-							   test/StackTest.cpp
+							   test/collections/CollectionTest.cpp
+							   test/collections/DequeTest.cpp
+							   test/collections/StackTest.cpp
 							   )
 	target_link_libraries(DataStructuresUnitTest ${Boost_LIBRARIES})
 
@@ -71,7 +69,7 @@ IF(Boost_FOUND)
 
 	add_executable(objectTest 
 	                           test/UnitTest.cpp
-	                           test/object
+	                           test/ObjectTest
 							   )
 	target_link_libraries(objectTest ${Boost_LIBRARIES})
 

@@ -1,36 +1,32 @@
-#ifndef node_h
-#define node_h
+#ifndef Node_H
+#define Node_H
 
 template <class E>
-class Node {
-private:
+struct Node {
 	E item;
 	Node * next;
-public:
-	explicit Node (E item, Node <E> * next) : item(item), next(next) {
+
+	explicit Node (const E & item, Node <E> * const nextNode) : item(item), next(nextNode) {
 	}
 
-	explicit Node (E item) : item(item) {
+	explicit Node (const E & item) : Node(item, nullptr) {
 	}
 
-	inline static void linkNode (Node <E> * newNode, Node <E> * nextNode) {
-		newNode->next = nextNode;
+	inline void link (Node <E> * const nextNode) {
+		nextNode->next = this->next;
+		this->next = nextNode;
 	}
 
-	inline static E & getItem (Node <E> * const node) {
-		return node->item;
+	inline E & getItem () {
+		return this->item;
 	}
 
-	inline static void setItem (Node <E> * const node, const E & item) {
-		node->item = item;
+	inline void setItem (const E & item) {
+		this->item = item;
 	}
 
-	inline static Node <E> * nextNode (Node <E> * node) {
-		return node->next;
-	}
-
-	inline static Node <E> * setNextNode (Node <E> * node, Node <E> * nextNode) {
-		return node->next = nextNode;
+	inline Node <E> * getNextNode () {
+		return this->next;
 	}
 };
 #endif

@@ -1,4 +1,3 @@
-#pragma once
 #ifndef Iterator_H
 #define Iterator_H
 
@@ -13,8 +12,5 @@ public:
 	virtual bool hasNext () const = 0;
 
 	virtual E & next () = 0;
-
-	// Removes from the underlying collection the last element returned by this iterator
-	virtual E remove () = 0;
 };
 #endif

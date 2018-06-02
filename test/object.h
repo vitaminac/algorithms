@@ -1,5 +1,5 @@
-#ifndef object_h
-#define object_h
+#ifndef Object_H
+#define Object_H
 
 #include <iostream>
 #include <string>
@@ -31,6 +31,10 @@ public:
 
 	virtual inline bool operator == (const Base & other) const {
 		return this->getB() == other.getB();
+	}
+
+	virtual inline bool operator != (const Base & other) const {
+		return !this->operator==(other);
 	}
 
 	virtual inline bool operator < (const Base & other) const {

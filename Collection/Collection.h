@@ -1,71 +1,57 @@
-#ifndef Collection_ADT_H
-#define Collection_ADT_H
-#include "Iterable.h"
-#include "ADT.h"
-
-using std::unique_ptr;
+#ifndef Collection_H
+#define Collection_H
+#include "iterate/Iterable.h"
+#include "behavior/Cloneable.h"
 
 // An iterator over a collection.
 template <class E>
-class Collection : public Iterable <E>, virtual public ADT <E> {
+class Collection : public Iterable <E>, public Cloneable {
 public:
 	Collection () = default;
 	virtual ~Collection () = default;
 
-	virtual bool contains (const E & e) {
-		auto it = unique_ptr <Iterator <E>>(this->iterator());
-		while (it->hasNext()) {
-			if (e == it->next()) {
-				return true;
-			}
-		}
-		return false;
-	}
+	// if this contains no elements
+	virtual bool isEmpty () const = 0;
 
-	virtual bool containsAll (const Collection <E> & c) {
-		bool modified = false;
-		unique_ptr <Iterator <E>> it = unique_ptr <Iterator <E>>(this->iterator());
-		while (it->hasNext())
-			if (!this->contains(it->next())) {
-				return false;
-			}
-		return true;
-	}
+	// Returns the number of elements
+	virtual int size () const = 0;
 
-	virtual bool remove (const E & e) {
-		unique_ptr <Iterator <E>> it = unique_ptr <Iterator <E>>(this->iterator());
-		while (it->hasNext()) {
-			if (e == it->next()) {
-				it->remove();
-				return true;
-			}
-		}
-		return false;
-	}
+	// posible object slicing
+	// Ensures that this collection contains the specified element
+	virtual void add (const E & e) = 0;
 
-	virtual void removeAll (Collection <E> & c) {
-		c.forEach([this] (const E & e)
+	// Removes a single instance of the specified element from this collection
+	virtual bool remove (const E & e) = 0;
+
+	// Removes all of the elements from this collection
+	virtual void clear () = 0;
+
+	virtual Collection <E> * clone () override = 0;
+
+	void merge (Iterable <E> & iterable) {
+		iterable.stream().forEach([this] (const E & e)
 		{
 			this->add(e);
 		});
 	}
 
-	virtual void clear (Consumer <E> consume) override {
-		unique_ptr <Iterator <E>> it = unique_ptr <Iterator <E>>(this->iterator());
-		while (it->hasNext()) {
-			it->next();
-			consume(it->remove());
-		}
+	// if this collection contains the specified element
+	virtual bool contains (const E & key) {
+		return this->stream().anyMatch([&key] (const E & e)
+		{
+			return key == e;
+		});
 	}
 
 	virtual E * toArray () {
-		const int length = this->size();
-		auto elements = static_cast <E *>(operator new[](length * sizeof(E)));
-		unique_ptr <Iterator <E>> it = unique_ptr <Iterator <E>>(this->iterator());
-		for (int i = 0; i < length; i++) {
-			elements[i] = it->next();
-		}
-		return elements;
+		const auto length = this->size();
+		E * arr = static_cast <E *>(operator new[](length * sizeof(E)));
+		auto index = 0;
+		return this->stream().template collect <E *>(arr, [&index] (E * collection, const E & e)
+		{
+			collection[index++] = e;
+			return collection;
+		});
 	}
 };
 #endif

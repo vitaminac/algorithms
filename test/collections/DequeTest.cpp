@@ -1,10 +1,10 @@
 #define BOOST_TEST_DYN_LINK
 #include <boost/test/unit_test.hpp>
 #include <iostream>
-#include "List/LinkedList.h"
-#include "Exception/CollectionEmptyException.h"
-#include "Exception/ConcurrentModificationException.h"
-#include "object.h"
+#include "collection/LinkedList.h"
+#include "exception/CollectionIsEmptyException.h"
+#include "exception/ConcurrentModificationException.h"
+#include "test/Object.h"
 
 BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 
@@ -19,32 +19,32 @@ BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 
 	BOOST_AUTO_TEST_CASE(TestingGetWhenEmpty) {
 		LinkedList <int> list = LinkedList <int>();
-		BOOST_CHECK_THROW(list.getFirst(), CollectionEmptyException);
-		BOOST_CHECK_THROW(list.getLast(), CollectionEmptyException);
+		BOOST_CHECK_THROW(list.first(), CollectionIsEmptyException);
+		BOOST_CHECK_THROW(list.last(), CollectionIsEmptyException);
 	}
 
 	BOOST_AUTO_TEST_CASE(TestingGetFirst) {
 		LinkedList <int> list = LinkedList <int>();
 		list.addFirst(2);
-		BOOST_CHECK_EQUAL(2, list.getFirst());
+		BOOST_CHECK_EQUAL(2, list.first());
 		list.addFirst(3);
-		BOOST_CHECK_EQUAL(3, list.getFirst());
+		BOOST_CHECK_EQUAL(3, list.first());
 		list.addFirst(4);
-		BOOST_CHECK_EQUAL(4, list.getFirst());
+		BOOST_CHECK_EQUAL(4, list.first());
 		list.addLast(1);
-		BOOST_CHECK_EQUAL(4, list.getFirst());
+		BOOST_CHECK_EQUAL(4, list.first());
 	}
 
 	BOOST_AUTO_TEST_CASE(TestingGetLast) {
 		LinkedList <int> list = LinkedList <int>();
 		list.addLast(2);
-		BOOST_CHECK_EQUAL(2, list.getLast());
+		BOOST_CHECK_EQUAL(2, list.last());
 		list.addLast(3);
-		BOOST_CHECK_EQUAL(3, list.getLast());
+		BOOST_CHECK_EQUAL(3, list.last());
 		list.addLast(4);
-		BOOST_CHECK_EQUAL(4, list.getLast());
+		BOOST_CHECK_EQUAL(4, list.last());
 		list.addFirst(1);
-		BOOST_CHECK_EQUAL(4, list.getLast());
+		BOOST_CHECK_EQUAL(4, list.last());
 	}
 
 	BOOST_AUTO_TEST_CASE(TestingAddFirst) {
@@ -147,8 +147,8 @@ BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 		}
 		BOOST_CHECK_EQUAL(100, list.size());
 		list.clear();
-		BOOST_CHECK_THROW(list.getFirst(), CollectionEmptyException);
-		BOOST_CHECK_THROW(list.getLast(), CollectionEmptyException);
+		BOOST_CHECK_THROW(list.first(), CollectionIsEmptyException);
+		BOOST_CHECK_THROW(list.last(), CollectionIsEmptyException);
 		BOOST_CHECK_EQUAL(0, list.size());
 	}
 
@@ -158,7 +158,7 @@ BOOST_AUTO_TEST_SUITE(DoublyLinkedListTest)
 			list.enqueue(i);
 		}
 		for (int i = 0; i < 100; i++) {
-			BOOST_CHECK_EQUAL(i, list.peek());
+			BOOST_CHECK_EQUAL(i, list.first());
 			BOOST_CHECK_EQUAL(i, list.dequeue());
 		}
 	}
