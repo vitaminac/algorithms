@@ -7,6 +7,7 @@
 #include "node/DeNode.h"
 #include "exception/CollectionIsEmptyException.h"
 #include "exception/ConcurrentModificationException.h"
+#include "base/Locker.h"
 
 template <class E>
 class LinkedList : public Collection <E>, public Deque <E>, public Queue <E>, public Stack <E> {
@@ -86,65 +87,76 @@ public:
 	}
 
 	virtual void addFirst (const E & e) override {
-		if (this->head == nullptr) {
-			this->head = new DeNode <E>(e);
-			this->tail = this->head;
-		} else {
-			this->head = new DeNode <E>(e, nullptr, this->head);
+		synchronized(this) {
+			if (this->head == nullptr) {
+				this->head = new DeNode <E>(e);
+				this->tail = this->head;
+			} else {
+				this->head = new DeNode <E>(e, nullptr, this->head);
+			}
 		}
 	}
 
 	virtual void addLast (const E & e) override {
-		if (this->tail == nullptr) {
-			this->head = new DeNode <E>(e);
-			this->tail = this->head;
-		} else {
-			this->tail = new DeNode <E>(e, this->tail, nullptr);
+		synchronized(this) {
+			if (this->tail == nullptr) {
+				this->head = new DeNode <E>(e);
+				this->tail = this->head;
+			} else {
+				this->tail = new DeNode <E>(e, this->tail, nullptr);
+			}
 		}
 	}
 
 	virtual E removeFirst () override {
-		if (this->isEmpty()) {
-			throw CollectionIsEmptyException();
-		} else {
-			auto node = this->getFirstNode();
-			if (node == this->getLastNode()) {
-				this->head = nullptr;
-				this->tail = nullptr;
+		synchronized(this) {
+			if (this->isEmpty()) {
+				throw CollectionIsEmptyException();
 			} else {
-				this->head = node->getNextNode();
+				auto node = this->getFirstNode();
+				if (node == this->getLastNode()) {
+					this->head = nullptr;
+					this->tail = nullptr;
+				} else {
+					this->head = node->getNextNode();
+				}
+				auto item = node->unlinkNode();
+				delete node;
+				return item;
 			}
-			auto item = node->unlinkNode();
-			delete node;
-			return item;
 		}
-
+		throw ConcurrentModificationException();
 	}
 
 	virtual E removeLast () override {
-		if (this->isEmpty()) {
-			throw CollectionIsEmptyException();
-		} else {
-			auto node = this->getLastNode();
-			if (node == this->getFirstNode()) {
-				this->head = nullptr;
-				this->tail = nullptr;
+		synchronized(this) {
+			if (this->isEmpty()) {
+				throw CollectionIsEmptyException();
 			} else {
-				this->tail = node->getPrevNode();
+				auto node = this->getLastNode();
+				if (node == this->getFirstNode()) {
+					this->head = nullptr;
+					this->tail = nullptr;
+				} else {
+					this->tail = node->getPrevNode();
+				}
+				auto item = node->unlinkNode();
+				delete node;
+				return item;
 			}
-			auto item = node->unlinkNode();
-			delete node;
-			return item;
 		}
+		throw ConcurrentModificationException();
 	}
 
 	virtual void clear () override {
-		try {
-			while (!this->isEmpty()) {
-				this->removeLast();
+		synchronized(this) {
+			try {
+				while (!this->isEmpty()) {
+					this->removeLast();
+				}
+			} catch (CollectionIsEmptyException & e) {
+				throw ConcurrentModificationException();
 			}
-		} catch (CollectionIsEmptyException & e) {
-			throw ConcurrentModificationException();
 		}
 	}
 
@@ -153,29 +165,37 @@ public:
 	}
 
 	virtual bool remove (const E & e) override {
-		Node * node = this->getFirstNode();
-		while ((node != nullptr) && (node->getItem() != e)) {
-			node = node->getNextNode();
-		}
-		if (node->getItem() == e) {
-			if (this->getFirstNode() == this->getLastNode()) {
-				this->head = nullptr;
-				this->tail = nullptr;
+		synchronized(this) {
+			Node * node = this->getFirstNode();
+			while ((node != nullptr) && (node->getItem() != e)) {
+				node = node->getNextNode();
 			}
-			node->unlinkNode();
-			return true;
-		} else {
-			return false;
+			if (node == nullptr) {
+				return false;
+			} else {
+				if (this->getFirstNode() == node) {
+					this->head = node->getNextNode();
+				}
+				if (this->getLastNode() == node) {
+					this->tail = node->getPrevNode();
+				}
+				node->unlinkNode();
+				return true;
+			}
 		}
+		throw ConcurrentModificationException();
 	}
 
 	virtual LinkedList <E> * clone () override {
-		LinkedList <E> * copy = new LinkedList <E>();
-		this->stream().forEach([&copy] (const E & e)
-		{
-			copy->add(e);
-		});
-		return copy;
+		synchronized(this) {
+			LinkedList <E> * copy = new LinkedList <E>();
+			this->stream().forEach([&copy] (const E & e)
+			{
+				copy->add(e);
+			});
+			return copy;
+		}
+		throw ConcurrentModificationException();
 	}
 
 	virtual void push (const E & e) override {

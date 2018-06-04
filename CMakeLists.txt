@@ -57,7 +57,9 @@ IF(Boost_FOUND)
 	                           test/UnitTest.cpp
 							   test/collections/CollectionTest.cpp
 							   test/collections/DequeTest.cpp
+							   test/collections/QueueTest.cpp
 							   test/collections/StackTest.cpp
+	                           base/Object.cpp
 							   )
 	target_link_libraries(DataStructuresUnitTest ${Boost_LIBRARIES})
 

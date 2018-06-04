@@ -5,7 +5,7 @@ class Hashable {
 public:
 	virtual ~Hashable () = default;
 	// map object to a int
-	virtual int hash () = 0;
+	virtual unsigned long long hash () = 0;
 };
 
 #endif

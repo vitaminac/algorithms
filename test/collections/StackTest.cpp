@@ -22,9 +22,9 @@ struct FStack {
 	vector <unique_ptr <Stack <int>>> stacks = vector <unique_ptr <Stack <int>>>();
 };
 
-BOOST_FIXTURE_TEST_SUITE(StackTesting, FStack)
+BOOST_FIXTURE_TEST_SUITE(StackTest, FStack)
 
-	BOOST_AUTO_TEST_CASE(TestingStackMethod) {
+	BOOST_AUTO_TEST_CASE(StackADT) {
 		for (const auto & stack : this->stacks) {
 			for (int i = 1; i <= 100; i++) {
 				stack->push(i);

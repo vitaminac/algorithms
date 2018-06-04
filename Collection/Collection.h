@@ -1,11 +1,12 @@
 #ifndef Collection_H
 #define Collection_H
+#include "base/Object.h"
 #include "iterate/Iterable.h"
 #include "behavior/Cloneable.h"
 
 // An iterator over a collection.
 template <class E>
-class Collection : public Iterable <E>, public Cloneable {
+class Collection : public Object, public Iterable <E> {
 public:
 	Collection () = default;
 	virtual ~Collection () = default;
