@@ -107,9 +107,9 @@ public:
 	// Returns the count of elements in this stream
 	int count () {
 		int count = 0;
-		if (it.hasNext()) {
+		while (it->hasNext()) {
 			count += 1;
-			it.next();
+			it->next();
 		}
 		return count;
 	}
