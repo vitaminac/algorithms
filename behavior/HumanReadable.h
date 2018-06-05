@@ -5,9 +5,9 @@
 using std::string;
 
 class HumanReadable {
-	virtual string toString () = 0;
+	virtual string toString () const = 0;
 
-	inline void display () {
+	inline void display () const {
 		std::cout << this->toString() << std::endl;
 	}
 };
