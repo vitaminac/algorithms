@@ -1,5 +1,5 @@
 sudo apt-get update
-sudo apt-get install -y build-essential g++ gdb gdbserver git cmake
+sudo apt-get install -y build-essential g++ gdb gdbserver git cmake ccache
 git clone https://github.com/Kitware/CMake.git
 cd CMake
 git checkout release
