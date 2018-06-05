@@ -56,26 +56,6 @@ public:
 		throw ConcurrentModificationException();
 	}
 
-	virtual bool isEmpty () const override {
-		synchronized(this) {
-			return this->head == nullptr;
-		}
-		throw ConcurrentModificationException();
-	}
-
-	virtual int size () const override {
-		synchronized(this) {
-			Node * node = this->getFirstNode();
-			int count = 0;
-			while (node != nullptr) {
-				count += 1;
-				node = node->getNextNode();
-			}
-			return count;
-		}
-		throw ConcurrentModificationException();
-	}
-
 	virtual void add (const E & e) override {
 		this->addLast(e);
 	}
@@ -182,32 +162,13 @@ public:
 		return new LinkedListIterator(this);
 	}
 
-	virtual bool remove (const E & e) override {
-		synchronized(this) {
-			Node * node = this->getFirstNode();
-			while ((node != nullptr) && (node->getItem() != e)) {
-				node = node->getNextNode();
-			}
-			if (node == nullptr) {
-				return false;
-			} else {
-				if (this->getFirstNode() == node) {
-					this->head = node->getNextNode();
-				}
-				if (this->getLastNode() == node) {
-					this->tail = node->getPrevNode();
-				}
-				node->unlinkNode();
-				return true;
-			}
-		}
-		throw ConcurrentModificationException();
-	}
-
 	virtual LinkedList <E> * clone () const override {
 		synchronized(this) {
 			LinkedList <E> * copy = new LinkedList <E>();
-			copy->merge(*this);
+			this->stream().forEach([&copy] (const E & e)
+			{
+				copy->add(e);
+			});
 			return copy;
 		}
 		throw ConcurrentModificationException();
@@ -229,12 +190,9 @@ public:
 		return this->removeFirst();
 	}
 
-	virtual bool contains (const E & key) const override {
+	virtual bool isEmpty () const override {
 		synchronized(this) {
-			return this->stream().anyMatch([&key] (const E & e)
-			{
-				return key == e;
-			});
+			return this->head == nullptr;
 		}
 		throw ConcurrentModificationException();
 	}

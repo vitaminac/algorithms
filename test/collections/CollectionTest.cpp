@@ -3,6 +3,7 @@
 #include <memory>
 #include <vector>
 #include "collection/Collection.h"
+#include "collection/ArrayList.h"
 #include "collection/LinkedList.h"
 #include "exception/CollectionIsEmptyException.h"
 #include "function/Predicate.h"
@@ -13,6 +14,7 @@ using std::unique_ptr;
 struct FCollection {
 	FCollection () {
 		this->collections.push_back(make_unique <LinkedList <int>>());
+		this->collections.push_back(make_unique <ArrayList <int>>());
 	}
 
 	~FCollection () = default;
@@ -24,34 +26,24 @@ BOOST_FIXTURE_TEST_SUITE(CollectionTest, FCollection)
 	BOOST_AUTO_TEST_CASE(TestingSizeAndIsEmpty) {
 		for (const auto & collection : this->collections) {
 			auto c = collection->clone();
-			BOOST_CHECK_EQUAL(0, c->size());
+			BOOST_CHECK_EQUAL(0, c->stream().count());
 			BOOST_CHECK(c->isEmpty());
 			for (int i = 1; i <= 100; i++) {
 				c->add(i);
-				BOOST_CHECK(!c->isEmpty());
-				BOOST_CHECK_EQUAL(i, c->size());
+				BOOST_CHECK_MESSAGE(!c->isEmpty(), "failed in iteration " << i);
+				BOOST_CHECK_MESSAGE(i == c->stream().count(), "failed in iteration " << i);
 			}
 			delete c;
 		}
 	}
 
-	BOOST_AUTO_TEST_CASE(TestingRemoveWhenEmpty) {
-		for (const auto & c : this->collections) {
-			BOOST_CHECK(!c->remove(0));
-		}
-	}
-
-	BOOST_AUTO_TEST_CASE(TestingAddAndRemove) {
+	BOOST_AUTO_TEST_CASE(TestingAdd) {
 		for (const auto & collection : this->collections) {
 			auto c = collection->clone();
 			for (int i = 0; i < 100; i++) {
 				c->add(i);
 			}
-			BOOST_CHECK_EQUAL(100, c->size());
-			for (int i = 100 - 1; i >= 0; i--) {
-				BOOST_CHECK(c->remove(i));
-			}
-			BOOST_CHECK(c->isEmpty());
+			BOOST_CHECK_EQUAL(100, c->stream().count());
 			delete c;
 		}
 	}
@@ -62,28 +54,11 @@ BOOST_FIXTURE_TEST_SUITE(CollectionTest, FCollection)
 			for (int i = 0; i < 100; i++) {
 				c->add(i);
 			}
-			BOOST_CHECK_EQUAL(100, c->size());
+			BOOST_CHECK_EQUAL(100, c->stream().count());
 			c->clear();
-			BOOST_CHECK_EQUAL(0, c->size());
+			BOOST_CHECK_EQUAL(0, c->stream().count());
 			delete c;
 		}
-	}
-
-	BOOST_AUTO_TEST_CASE(TestingMergeAndContains) {
-		auto origin = collections.front()->clone();
-		for (int i = 0; i < 100; i++) {
-			origin->add(i);
-		}
-		for (const auto & collection : this->collections) {
-			auto c = collection->clone();
-			c->merge(*origin);
-			BOOST_CHECK_EQUAL(100, c->size());
-			for (int i = 0; i < 100; i++) {
-				c->contains(i);
-			}
-			delete c;
-		}
-		delete origin;
 	}
 
 	/*
@@ -96,7 +71,6 @@ BOOST_FIXTURE_TEST_SUITE(CollectionTest, FCollection)
 				c->add(i);
 			}
 			auto it = c->iterator();
-			int i = 0;
 			for (int i = 0; i < 100; i++) {
 				BOOST_CHECK(it->hasNext());
 				BOOST_CHECK_EQUAL(i, it->next());
