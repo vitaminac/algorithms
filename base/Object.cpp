@@ -9,7 +9,7 @@ Object::~Object () {
 	std::cout << "Disposing " << this->Object::toString() << std::endl;
 }
 
-string Object::toString () {
+string Object::toString () const {
 	std::ostringstream oss;
 	oss << std::hex << this->hash();
 	return "Object@" + oss.str();
@@ -31,6 +31,6 @@ Object * Object::clone () const {
 	return new Object();
 }
 
-unsigned long long Object::hash () {
+unsigned long long Object::hash () const {
 	return reinterpret_cast <uintptr_t>(this);
 }

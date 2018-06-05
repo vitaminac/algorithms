@@ -14,11 +14,11 @@ class Object : public HumanReadable, public Cloneable, public Hashable, public S
 public:
 	explicit Object ();
 	virtual ~Object ();
-	virtual string toString () override;
+	virtual string toString () const override;
 	virtual inline bool operator == (const Object & other) const;
 	virtual inline bool operator != (const Object & other) const;
 	virtual inline bool operator < (const Object & other) const;
 	virtual Object * clone () const override;
-	virtual unsigned long long hash () override;
+	virtual unsigned long long hash () const override;
 };
 #endif
