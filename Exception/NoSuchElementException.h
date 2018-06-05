@@ -1,8 +1,7 @@
-#pragma once
 #ifndef NoSuchElementException_H
 #define NoSuchElementException_H
-#include <exception>
+#include "Exception.h"
 
-class NoSuchElementException final : std::exception {
+class NoSuchElementException final : public Exception {
 };
 #endif

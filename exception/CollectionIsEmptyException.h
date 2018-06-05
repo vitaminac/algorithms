@@ -1,9 +1,8 @@
-#pragma once
 #ifndef CollectionIsEmptyException_H
 #define CollectionIsEmptyException_H
-#include <exception>
+#include "Exception.h"
 
-class CollectionIsEmptyException final : std::exception {
+class CollectionIsEmptyException final : public Exception {
 
 };
 #endif

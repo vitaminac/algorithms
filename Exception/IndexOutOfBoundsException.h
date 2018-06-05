@@ -1,9 +1,8 @@
-#pragma once
 #ifndef IndexOutOfBoundsException_H
 #define IndexOutOfBoundsException_H
-#include <exception>
+#include "Exception.h"
 
-class IndexOutOfBoundsException final : std::exception {
+class IndexOutOfBoundsException final : public Exception {
 private:
 	const int index;
 public:

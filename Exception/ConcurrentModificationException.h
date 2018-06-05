@@ -1,8 +1,7 @@
-#pragma once
 #ifndef ConcurrentModificationException_H
 #define ConcurrentModificationException_H
-#include <exception>
+#include "Exception.h"
 
-class ConcurrentModificationException final : std::exception {
+class ConcurrentModificationException final : public Exception {
 };
 #endif
