@@ -1,11 +1,11 @@
 #ifndef Locker_H
 #define Locker_H
-#include "Object.h"
+#include "behavior/ThreadSafe.h"
 
 class Locker final {
 public:
 	//the default constructor
-	Locker (Object * o) : o(o) {
+	Locker (const ThreadSafe * o) : o(o) {
 		o->lock();
 	}
 
@@ -24,7 +24,7 @@ public:
 	}
 
 private:
-	Object * o;
+	const ThreadSafe * o;
 	bool finished = false;
 };
 

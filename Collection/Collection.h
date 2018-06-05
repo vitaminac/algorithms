@@ -27,9 +27,9 @@ public:
 	// Removes all of the elements from this collection
 	virtual void clear () = 0;
 
-	virtual Collection <E> * clone () override = 0;
+	virtual Collection <E> * clone () const override = 0;
 
-	void merge (Iterable <E> & iterable) {
+	void merge (const Iterable <E> & iterable) {
 		iterable.stream().forEach([this] (const E & e)
 		{
 			this->add(e);
@@ -37,22 +37,6 @@ public:
 	}
 
 	// if this collection contains the specified element
-	virtual bool contains (const E & key) {
-		return this->stream().anyMatch([&key] (const E & e)
-		{
-			return key == e;
-		});
-	}
-
-	virtual E * toArray () {
-		const auto length = this->size();
-		E * arr = static_cast <E *>(operator new[](length * sizeof(E)));
-		auto index = 0;
-		return this->stream().template collect <E *>(arr, [&index] (E * collection, const E & e)
-		{
-			collection[index++] = e;
-			return collection;
-		});
-	}
+	virtual bool contains (const E & key) const = 0;
 };
 #endif

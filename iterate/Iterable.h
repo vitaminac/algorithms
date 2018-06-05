@@ -10,9 +10,9 @@ public:
 	virtual ~Iterable () = default;
 
 	// you should use smart pointer wrapper
-	virtual Iterator <E> * iterator () = 0;
+	virtual Iterator <E> * iterator () const = 0;
 
-	Stream <E> stream () {
+	Stream <E> stream () const {
 		return Stream <E>(this->iterator());
 	};
 };

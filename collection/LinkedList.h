@@ -17,7 +17,7 @@ class LinkedList : public Collection <E>, public Deque <E>, public Queue <E>, pu
 	struct LinkedListIterator : public Iterator <E> {
 		Node * node;
 
-		explicit LinkedListIterator (LinkedList <E> * const list) {
+		explicit LinkedListIterator (const LinkedList <E> * const list) {
 			this->node = list->getFirstNode();
 		};
 
@@ -43,25 +43,37 @@ public:
 	}
 
 	Node * getFirstNode () const {
-		return this->head;
+		synchronized(this) {
+			return this->head;
+		}
+		throw ConcurrentModificationException();
 	}
 
 	Node * getLastNode () const {
-		return this->tail;
+		synchronized(this) {
+			return this->tail;
+		}
+		throw ConcurrentModificationException();
 	}
 
 	virtual bool isEmpty () const override {
-		return this->head == nullptr;
+		synchronized(this) {
+			return this->head == nullptr;
+		}
+		throw ConcurrentModificationException();
 	}
 
 	virtual int size () const override {
-		Node * node = this->getFirstNode();
-		int count = 0;
-		while (node != nullptr) {
-			count += 1;
-			node = node->getNextNode();
+		synchronized(this) {
+			Node * node = this->getFirstNode();
+			int count = 0;
+			while (node != nullptr) {
+				count += 1;
+				node = node->getNextNode();
+			}
+			return count;
 		}
-		return count;
+		throw ConcurrentModificationException();
 	}
 
 	virtual void add (const E & e) override {
@@ -69,21 +81,27 @@ public:
 	}
 
 	virtual E & first () const override {
-		Node * node = this->getFirstNode();
-		if (node == nullptr) {
-			throw CollectionIsEmptyException();
-		} else {
-			return node->getItem();
+		synchronized(this) {
+			Node * node = this->getFirstNode();
+			if (node == nullptr) {
+				throw CollectionIsEmptyException();
+			} else {
+				return node->getItem();
+			}
 		}
+		throw ConcurrentModificationException();
 	}
 
 	virtual E & last () const override {
-		Node * node = this->getLastNode();
-		if (node == nullptr) {
-			throw CollectionIsEmptyException();
-		} else {
-			return node->getItem();
+		synchronized(this) {
+			Node * node = this->getLastNode();
+			if (node == nullptr) {
+				throw CollectionIsEmptyException();
+			} else {
+				return node->getItem();
+			}
 		}
+		throw ConcurrentModificationException();
 	}
 
 	virtual void addFirst (const E & e) override {
@@ -160,7 +178,7 @@ public:
 		}
 	}
 
-	virtual Iterator <E> * iterator () override {
+	virtual Iterator <E> * iterator () const override {
 		return new LinkedListIterator(this);
 	}
 
@@ -186,13 +204,10 @@ public:
 		throw ConcurrentModificationException();
 	}
 
-	virtual LinkedList <E> * clone () override {
+	virtual LinkedList <E> * clone () const override {
 		synchronized(this) {
 			LinkedList <E> * copy = new LinkedList <E>();
-			this->stream().forEach([&copy] (const E & e)
-			{
-				copy->add(e);
-			});
+			copy->merge(*this);
 			return copy;
 		}
 		throw ConcurrentModificationException();
@@ -212,6 +227,16 @@ public:
 
 	virtual E dequeue () override {
 		return this->removeFirst();
+	}
+
+	virtual bool contains (const E & key) const override {
+		synchronized(this) {
+			return this->stream().anyMatch([&key] (const E & e)
+			{
+				return key == e;
+			});
+		}
+		throw ConcurrentModificationException();
 	}
 };
 #endif

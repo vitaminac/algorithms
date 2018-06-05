@@ -7,32 +7,18 @@
 #include "behavior/Cloneable.h"
 #include "behavior/Hashable.h"
 #include "behavior/Serializable.h"
-using std::string;
+#include "behavior/HumanReadable.h"
+#include "behavior/ThreadSafe.h"
 
-class Object : public Cloneable, public Hashable, public Serializable {
+class Object : public HumanReadable, public Cloneable, public Hashable, public Serializable, public ThreadSafe {
 public:
 	explicit Object ();
 	virtual ~Object ();
-	virtual string toString ();
+	virtual string toString () override;
 	virtual inline bool operator == (const Object & other) const;
 	virtual inline bool operator != (const Object & other) const;
 	virtual inline bool operator < (const Object & other) const;
-	virtual Object * clone () override;
+	virtual Object * clone () const override;
 	virtual unsigned long long hash () override;
-
-	inline void print () {
-		std::cout << this->toString() << std::endl;
-	}
-
-	inline void lock () {
-		this->mtx.lock();
-	}
-
-	inline void unlock () {
-		this->mtx.unlock();
-	}
-
-private:
-	std::recursive_mutex mtx;
 };
 #endif

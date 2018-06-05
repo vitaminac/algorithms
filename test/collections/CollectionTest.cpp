@@ -5,6 +5,7 @@
 #include "collection/Collection.h"
 #include "collection/LinkedList.h"
 #include "exception/CollectionIsEmptyException.h"
+#include "function/Predicate.h"
 using std::vector;
 using std::make_unique;
 using std::unique_ptr;
@@ -104,6 +105,7 @@ BOOST_FIXTURE_TEST_SUITE(CollectionTest, FCollection)
 			delete c;
 		}
 	}
+
 	/*
 	* Stream Interface
 	*/
@@ -119,6 +121,44 @@ BOOST_FIXTURE_TEST_SUITE(CollectionTest, FCollection)
 				ac += i;
 			});
 			BOOST_CHECK_EQUAL((0 + 99) * 50, ac);
+			delete c;
+		}
+	}
+
+	BOOST_AUTO_TEST_CASE(AnyMatch) {
+		for (auto & collection : collections) {
+			auto c = collection->clone();
+			for (int i = 0; i < 100; i++) {
+				c->add(i);
+			}
+			int key;
+			Predicate <int> search = [&key] (const int & e)
+			{
+				return key == e;
+			};
+			key = 50;
+			BOOST_CHECK(c->stream().anyMatch(search));
+			key = 100;
+			BOOST_CHECK(!c->stream().anyMatch(search));
+			key = 0;
+			BOOST_CHECK(c->stream().anyMatch(search));
+			key = -1;
+			BOOST_CHECK(!c->stream().anyMatch(search));
+			delete c;
+		}
+	}
+
+	BOOST_AUTO_TEST_CASE(Collect) {
+		for (auto & collection : collections) {
+			auto c = collection->clone();
+			for (int i = 0; i < 100; i++) {
+				c->add(i);
+			}
+			BOOST_CHECK_EQUAL((0 + 99) * 50, c->stream().template collect <double>(0, [](double ac, const int & e)
+			{
+				ac += e;
+				return ac;
+			}));
 			delete c;
 		}
 	}

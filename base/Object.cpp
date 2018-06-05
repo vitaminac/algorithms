@@ -27,7 +27,7 @@ bool Object::operator< (const Object & other) const {
 	return this < &other;
 }
 
-Object * Object::clone () {
+Object * Object::clone () const {
 	return new Object();
 }
 
