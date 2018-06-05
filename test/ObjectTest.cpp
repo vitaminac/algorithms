@@ -1,7 +1,7 @@
 #define BOOST_TEST_DYN_LINK
 #include <boost/test/unit_test.hpp>
-#include "object.h"
-#include "function/comparator.h"
+#include "Object.h"
+#include "function/Comparator.h"
 
 struct FObject {
 	FObject () {

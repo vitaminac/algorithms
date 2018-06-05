@@ -69,17 +69,17 @@ IF(Boost_FOUND)
 							   )
 	target_link_libraries(DataStructuresUnitTest ${Boost_LIBRARIES})
 
-	add_executable(sortingTest 
+	add_executable(AlgorithmsTest 
 	                           test/UnitTest.cpp
-	                           test/sortingTest
+	                           test/algorithms/SortTest.cpp
 							   )
-	target_link_libraries(sortingTest ${Boost_LIBRARIES})
+	target_link_libraries(AlgorithmsTest ${Boost_LIBRARIES})
 
-	add_executable(objectTest 
+	add_executable(ObjectTest 
 	                           test/UnitTest.cpp
-	                           test/ObjectTest
+	                           test/ObjectTest.cpp
 							   )
-	target_link_libraries(objectTest ${Boost_LIBRARIES})
+	target_link_libraries(ObjectTest ${Boost_LIBRARIES})
 
 	add_executable(arrayTest 
 	                           test/array/array.cpp
@@ -93,8 +93,8 @@ IF(Boost_FOUND)
 	add_test(build_test "${CMAKE_COMMAND}" --build ${CMAKE_BINARY_DIR})
 	add_test(TestDriven TestDriven)
 	add_test(DataStructuresUnitTest DataStructuresUnitTest)
-	add_test(sortingTest sortingTest)
-	add_test(objectTest objectTest)
+	add_test(AlgorithmsTest AlgorithmsTest)
+	add_test(ObjectTest ObjectTest)
 	add_test(arrayTest arrayTest)
 ENDIF()
 

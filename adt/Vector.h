@@ -1,9 +1,8 @@
 #ifndef Vector_H
 #define Vector_H
 #include "behavior/RandomAccess.h"
-#include "function/Comparator.h"
 #include "exception/NoSuchElementException.h"
-#include "sort/sorting.h"
+#include "function/sort/SortingAlgorithm.h"
 
 /*
  * A linear sequence of elements that 
@@ -22,10 +21,10 @@ public:
 		return this->size() == 0;
 	}
 
-	void sort (const Comparator <E> & compare) {
+	void sort (const SortingAlgorithm <E> & sorter) {
 		const auto size = this->size();
 		auto arr = this->toArray();
-		Sorting <E>::timsort(arr, 0, size, compare);
+		sorter.sort(arr, size);
 		for (int i = 0; i < size; i++) {
 			this->operator[](i) = arr[i];
 		}
