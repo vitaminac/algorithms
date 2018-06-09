@@ -53,30 +53,27 @@ IF(Boost_FOUND)
 	include_directories(SYSTEM ${Boost_INCLUDE_DIRS} ${DataStructures_SOURCE_DIR})
 	link_directories(${Boost_LIBRARY_DIRS})
 
-	add_executable(TestDriven 
-	                           test/UnitTest.cpp
-							   test/testDriven.cpp
+	add_library(adtTest STATIC
+	                           test/adt/StackTest.cpp
+	                           test/adt/QueueTest.cpp
+							   test/adt/DequeTest.cpp
 							   )
-    target_link_libraries(TestDriven ${Boost_LIBRARIES})
 
 	add_executable(DataStructuresUnitTest 
-	                           test/UnitTest.cpp
+	                           test/collections/DataStructuresTest.cpp
 							   test/collections/CollectionTest.cpp
-							   test/collections/DequeTest.cpp
-							   test/collections/QueueTest.cpp
-							   test/collections/StackTest.cpp
+							   test/collections/LinkedList.cpp
 	                           base/Object.cpp
 							   )
-	target_link_libraries(DataStructuresUnitTest ${Boost_LIBRARIES})
+	target_link_libraries(DataStructuresUnitTest adtTest ${Boost_LIBRARIES})
 
-	add_executable(AlgorithmsTest 
-	                           test/UnitTest.cpp
+	add_executable(AlgorithmsTest
+	                           test/algorithms/AlgorithmsTest.cpp
 	                           test/algorithms/SortTest.cpp
 							   )
 	target_link_libraries(AlgorithmsTest ${Boost_LIBRARIES})
 
 	add_executable(ObjectTest 
-	                           test/UnitTest.cpp
 	                           test/ObjectTest.cpp
 							   )
 	target_link_libraries(ObjectTest ${Boost_LIBRARIES})
