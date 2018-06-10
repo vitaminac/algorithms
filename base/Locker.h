@@ -1,6 +1,6 @@
 #ifndef Locker_H
 #define Locker_H
-#include "behavior/ThreadSafe.h"
+#include "abstract/ThreadSafe.h"
 
 class Locker final {
 public:

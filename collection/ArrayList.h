@@ -1,7 +1,7 @@
 #ifndef ArrayList_H
 #define ArrayList_H
 #include "Collection.h"
-#include "adt/Vector.h"
+#include "abstract/adt/Vector.h"
 #include "exception/IndexOutOfBoundsException.h"
 
 template <class E>

@@ -1,5 +1,5 @@
 #include "ADTTest.h"
-#include "adt/Stack.h"
+#include "abstract/adt/Stack.h"
 
 void testStackADT (Stack <int> * stack) {
 	for (int i = 1; i <= 100; i++) {

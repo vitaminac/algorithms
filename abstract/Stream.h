@@ -52,7 +52,7 @@ public:
 				return result;
 			}
 		};
-		return filteredIterator(this->it, test);
+		return Stream <E>(filteredIterator(this->it, test));
 	}
 
 	bool anyMatch (Predicate <E> test) {
@@ -74,7 +74,24 @@ public:
 
 	template <class R>
 	Stream <R> map (Mapper <E, R> f) {
+		struct MappedIterator : Iterator <E> {
+			Iterator <E> & it;
+			Mapper <E, R> map;
+			R * e = nullptr;
 
+			explicit MappedIterator (Iterator <E> & it, Mapper <E, R> map) : it(it), map(map) {
+			}
+
+			virtual bool hasNext () const override {
+				return this->it.hasNext();
+			}
+
+			virtual R & next () override {
+				e = map(this->it.next());
+				return *e;
+			}
+		};
+		return Stream <R>(this->it, map);
 	}
 
 	Stream <E> limit (int n) {

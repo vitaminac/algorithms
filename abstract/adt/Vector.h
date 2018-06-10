@@ -1,6 +1,6 @@
 #ifndef Vector_H
 #define Vector_H
-#include "behavior/RandomAccess.h"
+#include "abstract/RandomAccess.h"
 #include "exception/NoSuchElementException.h"
 #include "function/sort/SortingAlgorithm.h"
 

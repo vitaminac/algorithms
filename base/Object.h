@@ -4,11 +4,11 @@
 #include <string>
 #include <sstream>
 #include <mutex>
-#include "behavior/Cloneable.h"
-#include "behavior/Hashable.h"
-#include "behavior/Serializable.h"
-#include "behavior/HumanReadable.h"
-#include "behavior/ThreadSafe.h"
+#include "abstract/Cloneable.h"
+#include "abstract/Hashable.h"
+#include "abstract/Serializable.h"
+#include "abstract/HumanReadable.h"
+#include "abstract/ThreadSafe.h"
 
 class Object : public HumanReadable, public Cloneable, public Hashable, public Serializable, public ThreadSafe {
 public:

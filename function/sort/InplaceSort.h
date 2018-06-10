@@ -15,7 +15,7 @@ private:
 	}
 
 public:
-	explicit InplaceSort (const Comparator <E> compare) : compare(compare) {
+	explicit InplaceSort (const Comparator <E> compare = DefaultComparator<E>) : compare(compare) {
 	}
 
 	virtual ~InplaceSort () = default;

@@ -31,7 +31,7 @@ private:
 	}
 
 public:
-	explicit QuickSort (const Comparator <E> compare): compare(compare) {
+	explicit QuickSort (const Comparator <E> compare = DefaultComparator<E>): compare(compare) {
 	}
 
 	virtual ~QuickSort () = default;

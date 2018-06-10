@@ -1,18 +1,56 @@
 #ifndef LinkedList_H
 #define LinkedList_H
+#include "abstract/adt/Deque.h"
+#include "abstract/adt/Queue.h"
+#include "abstract/adt/Stack.h"
+#include "abstract/adt/PositionalList.h"
+#include "base/Locker.h"
 #include "collection/Collection.h"
-#include "adt/Deque.h"
-#include "adt/Queue.h"
-#include "adt/Stack.h"
-#include "node/DeNode.h"
 #include "exception/CollectionIsEmptyException.h"
 #include "exception/ConcurrentModificationException.h"
-#include "base/Locker.h"
 
 template <class E>
-class LinkedList : public Collection <E>, public Deque <E>, public Queue <E>, public Stack <E> {
+class LinkedList : public Collection <E>,
+                   public PositionalList <E>,
+                   public Deque <E>,
+                   public Queue <E>,
+                   public Stack <E> {
 
-	using Node = DeNode <E>;
+	struct Node : Position <E> {
+		E item;
+		Node * prev;
+		Node * next;
+
+		inline explicit Node (const E & item, Node * const prevNode, Node * const nextNode) : item(item) {
+			this->link(prevNode, nextNode);
+		}
+
+		inline explicit Node (const E & item) : Node(item, nullptr, nullptr) {
+		}
+
+		inline E unlinkNode () {
+			auto prevNode = this->prev;
+			auto nextNode = this->next;
+			if (prevNode != nullptr) {
+				prevNode->next = nextNode;
+			}
+			if (nextNode != nullptr) {
+				nextNode->prev = prevNode;
+			}
+			return this->item;
+		}
+
+		inline void link (Node * const prevNode, Node * const nextNode) {
+			this->prev = prevNode;
+			this->next = nextNode;
+			if (prevNode != nullptr) {
+				prevNode->next = this;
+			}
+			if (nextNode != nullptr) {
+				nextNode->prev = this;
+			}
+		}
+	};
 
 	struct LinkedListIterator : public Iterator <E> {
 		Node * node;
@@ -28,8 +66,8 @@ class LinkedList : public Collection <E>, public Deque <E>, public Queue <E>, pu
 		}
 
 		virtual E & next () override {
-			E & item = this->node->getItem();
-			node = node->getNextNode();
+			E & item = this->node->item;
+			node = node->next;
 			return item;
 		}
 	};
@@ -66,7 +104,7 @@ public:
 			if (node == nullptr) {
 				throw CollectionIsEmptyException();
 			} else {
-				return node->getItem();
+				return node->item;
 			}
 		}
 		throw ConcurrentModificationException();
@@ -78,7 +116,7 @@ public:
 			if (node == nullptr) {
 				throw CollectionIsEmptyException();
 			} else {
-				return node->getItem();
+				return node->item;
 			}
 		}
 		throw ConcurrentModificationException();
@@ -87,10 +125,10 @@ public:
 	virtual void addFirst (const E & e) override {
 		synchronized(this) {
 			if (this->head == nullptr) {
-				this->head = new DeNode <E>(e);
+				this->head = new Node(e);
 				this->tail = this->head;
 			} else {
-				this->head = new DeNode <E>(e, nullptr, this->head);
+				this->head = new Node(e, nullptr, this->head);
 			}
 		}
 	}
@@ -98,10 +136,10 @@ public:
 	virtual void addLast (const E & e) override {
 		synchronized(this) {
 			if (this->tail == nullptr) {
-				this->head = new DeNode <E>(e);
+				this->head = new Node(e);
 				this->tail = this->head;
 			} else {
-				this->tail = new DeNode <E>(e, this->tail, nullptr);
+				this->tail = new Node(e, this->tail, nullptr);
 			}
 		}
 	}
@@ -116,7 +154,7 @@ public:
 					this->head = nullptr;
 					this->tail = nullptr;
 				} else {
-					this->head = node->getNextNode();
+					this->head = node->next;
 				}
 				auto item = node->unlinkNode();
 				delete node;
@@ -136,7 +174,7 @@ public:
 					this->head = nullptr;
 					this->tail = nullptr;
 				} else {
-					this->tail = node->getPrevNode();
+					this->tail = node->prev;
 				}
 				auto item = node->unlinkNode();
 				delete node;
@@ -195,6 +233,10 @@ public:
 			return this->head == nullptr;
 		}
 		throw ConcurrentModificationException();
+	}
+
+	virtual E & operator[] (Position <E> & p) const override {
+		return static_cast <Node &>(p).item;
 	}
 };
 #endif

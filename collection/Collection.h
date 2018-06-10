@@ -1,6 +1,6 @@
 #ifndef Collection_H
 #define Collection_H
-#include "iterate/Iterable.h"
+#include "abstract/Iterable.h"
 #include "base/Object.h"
 
 // An iterator over a collection.
