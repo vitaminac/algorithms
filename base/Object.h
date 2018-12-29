@@ -10,7 +10,7 @@
 #include "abstract/HumanReadable.h"
 #include "abstract/ThreadSafe.h"
 
-class Object : public HumanReadable, public Cloneable, public Hashable, public Serializable, public ThreadSafe {
+class Object : public HumanReadable, public Cloneable, public Hashable, public Serializable {
 public:
 	explicit Object ();
 	virtual ~Object ();
